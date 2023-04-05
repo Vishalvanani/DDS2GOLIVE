@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> DDS 2 GO </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <p class="txt-center blue-color">Welcome!</p>
+  <p class="txt-center blue-color">Georgia's Driver Services in your hand</p>
+  <div align="center">
+    <ion-img src="assets/home-1.jpg" class="home-1"></ion-img>
+  </div>
+  <p class="txt-center blue-color">Let's Get Started</p>
+  <div align="center">
+    <ion-img src="assets/home-3.jpg" class="home-3"></ion-img>
+    <ion-img src="assets/home-2.jpeg" class="home-2"></ion-img>
+  </div>
+
+  <br />
+  <div align="center">
+    <ion-button
+      color="primary"
+      expand="block"
+      class="login-btn"
+      (click)="login()"
+      >Login</ion-button
+    >
+    <ion-button color="primary" fill="clear" class="blue-color"
+      >CONTINUE AS A GUEST ></ion-button
+    >
+  </div>
+</ion-content>

@@ -1,0 +1,22 @@
+.home-1 {
+  max-width: 280px;
+}
+.home-2 {
+  max-width: 80px;
+}
+.home-3{
+  max-width: 54px;
+}
+.login-btn{
+  max-width: 250px;
+  --box-shadow: none;
+  --ion-color-base: #103a84 !important;
+}
+
+ion-toolbar{
+  --background:#103a84;
+  color: white;
+  ion-title{
+    text-align: center;
+  }
+}

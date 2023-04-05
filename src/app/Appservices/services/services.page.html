@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Services</ion-title>
+    <ion-buttons slot="end" (click)="auth.logoutApp()">
+      <ion-icon name="log-out-outline" class="font-25"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item (click)="openinAppBrowser('https://dds.georgia.gov/your-georgia-drivers-license/appointments')" detail="true">
+      <ion-label>Road Test Reservation</ion-label>
+    </ion-item>
+    <ion-item (click)="openinAppBrowser('https://dds.drives.ga.gov?link=OCRA')" detail="true">
+      <ion-label>Certificate Validation</ion-label>
+    </ion-item>
+    <ion-item (click)="openinAppBrowser('https://dds.drives.ga.gov/')" detail="true">
+      <ion-label>ADAP Free 3 year Non-Certified MVR</ion-label>
+    </ion-item>
+    <ion-item (click)="orderHistory()" detail="true">
+      <ion-label>View Order Status/History</ion-label>
+    </ion-item>
+  
+  </ion-list>
+</ion-content>

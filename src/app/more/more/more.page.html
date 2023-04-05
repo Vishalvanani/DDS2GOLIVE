@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>More</ion-title>
+    <ion-buttons slot="end" (click)="auth.logoutApp()">
+      <ion-icon name="log-out-outline" class="font-25"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item (click)="openinAppBrowser('https://dds.georgia.gov/georgia-licenseid/general-license-topics/licensesid-faqs')" detail="true">
+      <ion-label>FAQs</ion-label>
+    </ion-item>
+    <ion-item (click)="openinAppBrowser('https://dds.georgia.gov/dds-forms-and-manuals/manuals')" detail="true">
+      <ion-label>Drivers Manual</ion-label>
+    </ion-item>
+    <ion-item (click)="openinAppBrowser('https://online.dds.ga.gov/ddsgeorgiagov/practicetest/index.aspx')" detail="true">
+      <ion-label>Practice Exam for Driver's Test</ion-label>
+    </ion-item>
+    <ion-item (click)="contactUs()" detail="true">
+      <ion-label>Contact Us</ion-label>
+    </ion-item>
+    <ion-item (click)="privacy()" detail="true">
+      <ion-label>Privacy Policy</ion-label>
+    </ion-item>
+    <ion-item (click)="openinAppBrowser('https://dds.georgia.gov/georgia-licenseid')" detail="true">
+      <ion-label>How Do I</ion-label>
+    </ion-item>
+
+    <ion-item (click)="openinAppBrowser('https://dds.georgia.gov/georgia-licenseid/general-license-topics/real-id')" detail="true">
+      <ion-label>What Do I Need To Bring?</ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,134 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="loginForm" (ngSubmit)="clickSubmit()" novalidate>
+    <div align="center">
+      <ion-img src="assets/login-1.jpg" class="login-1"></ion-img>
+      <p
+        class="ion-padding txt-center blue-color max-width font-13 pad-t-0 pad-b-0"
+      >
+        Please sign in with your DDS Online Services Account. No account yet?
+        <a href="#">Sign Up!</a>
+      </p>
+    </div>
+
+    <div align="center" class="ion-padding login-form">
+      <ion-item fill="outline">
+        <ion-label position="floating">Email Address</ion-label>
+        <ion-input
+          type="email"
+          formControlName="userEmail"
+        ></ion-input> </ion-item
+      ><br />
+
+      <ion-item fill="outline">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" formControlName="userPassword"></ion-input>
+      </ion-item>
+    </div>
+
+    <div align="center">
+      <ion-button
+        type="submit"
+        color="primary"
+        expand="block"
+        class="login-btn"
+        [disabled]="!loginForm.valid"
+        >Login</ion-button
+      >
+      <ion-button
+        color="primary"
+        fill="clear"
+        class="blue-color font-13 txt-trans-none"
+        (click)="forgotpwd()"
+        >Forgot Your Password?</ion-button
+      >
+    </div>
+  </form>
+  <div align="center" class="max-width margin-0-auto toggle-div">
+    <ion-item>
+      <ion-label>Save User ID</ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Enable Touch ID</ion-label>
+      <ion-toggle
+        [(ngModel)]="touchIdValue"
+        (ionChange)="touchIdChange($event)"
+      ></ion-toggle>
+    </ion-item>
+  </div>
+  <br />
+
+  <ion-modal
+    trigger="open-modal"
+    (willDismiss)="modalwilldiscmiss()"
+    [isOpen]="isModalOpen"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Verify It's You</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()"
+              ><ion-icon name="close-circle-outline"></ion-icon
+            ></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <p>
+          For your security, DDS wants to make sure this account really belongs
+          to you.
+        </p>
+        <hr />
+
+        <div>
+          <h4>Verify Security Code</h4>
+          <p>
+            A security code was sent to the preferred contact method we have on
+            file for you at DDS, either phone number or email. Please enter the
+            security code and select the <b>Continue</b> button below to verify.
+          </p>
+        </div>
+
+        <ion-item>
+          <ion-label position="stacked">Security Code</ion-label>
+          <ion-input
+            type="text"
+            placeholder=""
+            [(ngModel)]="securityCode"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <p>
+          <b
+            >If you do not receive your message, please lo into Online Services
+            to confirm your security code is setup properly. If it is, check
+            with your phone carrier or email provider.</b
+          >
+        </p>
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-button
+            expand="block"
+            fill="clear"
+            (click)="validateSecurityCode()"
+            [disabled]="securityCode ==''?true : false"
+            >CONTINUE</ion-button
+          >
+        </ion-toolbar>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+</ion-content>

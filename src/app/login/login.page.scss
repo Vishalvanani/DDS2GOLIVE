@@ -1,0 +1,53 @@
+.login-1{
+  max-width: 250px;
+}
+ion-toolbar {
+  --background: #103a84;
+  color: white;
+
+  ion-title {
+    text-align: center;
+    padding-left: 0px;
+    position: relative;
+    left: -16px;
+  }
+}
+
+.login-form{
+  ion-item{
+    max-width: 320px;
+  }
+}
+
+.max-width{
+  max-width: 320px;
+}
+
+.login-btn {
+  max-width: 320px;
+  --box-shadow: none;
+  --ion-color-base: #103a84 !important;
+}
+
+.toggle-div{
+  ion-item{
+    --padding-start:0px !important;
+    --inner-padding-end: 0px !important;
+    --inner-border-width:0px !important;
+  }
+}
+ion-modal{
+  ion-button{
+    --color:white !important;
+    font-size: 16px !important;
+  }
+  ion-item{
+    --padding-start:0px !important;
+    --inner-padding-end: 0px !important;
+    --inner-border-width:0px !important;
+
+    ion-label{
+      font-size: 16px;
+    }
+  }
+}

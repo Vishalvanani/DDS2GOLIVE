@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Messages</ion-title>
+    <ion-buttons slot="end" (click)="Apiauth.logoutApp()">
+      <ion-icon name="log-out-outline" class="font-25"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor="let item of list">
+    <ion-item detail="true" (click)="detail(item)">
+      <ion-label>
+        <h4><b>{{getHeaderText(item._EventTypeCode)}}</b></h4>
+        <p class="line-h-25 font-w-600">
+          <ion-icon
+            name="mail-unread"
+            class="un-read-icon"
+            *ngIf="item._UnreadMessage"
+          ></ion-icon>
+          {{item._MessageDT}}
+        </p>
+        <p class="white-sp-normal font-15">
+          {{item._MessageText | slice:0:180}}...
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <div class="ion-text-center pos-r-t-40" *ngIf="isNoMsg">
+    <p>{{nomessages}}</p>
+  </div>
+</ion-content>

@@ -1,0 +1,45 @@
+ion-content::part(background){
+    background: #f8f8f8;
+}
+ion-card-content p{
+    font-size: 16px;
+    color:black;
+    line-height:1.5;
+}
+
+ion-accordion ion-item ion-label{
+    font-size: 16px;
+}
+
+ion-card{
+    ion-card-header{
+        //background: #57575745;
+        //margin-bottom: 14px;
+        border-bottom: 1px solid #eeeeee;
+    }
+    ion-card-title{
+        //font-weight: 600;
+        font-size: 16px;
+    }
+}
+
+.real-id-card{
+    ion-card-header{
+        padding: 8px;
+        ion-item{
+            --background: none;
+        }
+    }
+    ion-card-content ion-item{
+        height: 40px;
+    }
+}
+.i-points{
+    border-top: 1px solid #eee;
+}
+
+.type-lic{
+  position: relative;
+    top: -7px;
+    left: 4px;
+}

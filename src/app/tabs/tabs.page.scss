@@ -1,0 +1,16 @@
+ion-tab-button{
+    background-color: #103a84;
+    ion-icon,ion-label{
+        color: white;
+        
+    }
+    ion-label{
+        font-size: 12px;
+    }
+}
+.tab-selected{
+    background-color: white;
+    ion-icon,ion-label{
+        color: #103a84;
+    }
+}

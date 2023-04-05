@@ -1,0 +1,347 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Order history</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-modal
+    trigger="open-modal"
+    (willDismiss)="onWillDismiss($event)"
+    [isOpen]="isModalOpen"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Driving History(MVR)</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <h4>
+          {{orders['previousMVRData'][selectedInd]['_objMVROrderInfo']._TypeName}}
+        </h4>
+        <ion-accordion-group>
+          <ion-accordion value="doc">
+            <ion-item slot="header" color="light">
+              <ion-label>Document Issued</ion-label>
+            </ion-item>
+            <div
+              class="ion-padding"
+              slot="content"
+              *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstLicenseInfo']"
+            >
+              <p>License Class : {{doc.m_LicIDClassCD}}</p>
+              <p>Issued : {{doc.m_LicIDIssueDT}}</p>
+              <p>Expires : {{doc.m_LicIDExpDT}}</p>
+              <p>Surrendered : {{doc.m_LicenseSurrenderDT}}</p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="orderinfo">
+            <ion-item slot="header" color="light">
+              <ion-label>Order Information</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <p>
+                Non-commercila Privilige :
+                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._NonCommercialPrivilidges}}
+              </p>
+              <p>
+                Commercial Privilige :
+                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._CommercialPrivilidges}}
+              </p>
+              <p>
+                Limited Permit :
+                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._LimitedPermit}}
+              </p>
+              <p>
+                Current Points :
+                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._TotalPoints}}
+              </p>
+              <p>
+                Order Date:
+                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._OriginalIssueDT}}
+              </p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="commercial">
+            <ion-item slot="header" color="light">
+              <ion-label>Commercial Information</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <p>
+                DriverCertification:{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode}}
+              </p>
+              <p>
+                SelfCertification:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode}}
+              </p>
+              <p>
+                SelfCertFormReceived:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived}}
+              </p>
+              <p>
+                Type:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode}}
+              </p>
+              <p>
+                MedCertReceived:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode}}
+              </p>
+              <p>
+                MedCertExpires:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate}}
+              </p>
+              <p>MedRestrictions: ''</p>
+              <p>
+                MedicalVariances:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode}}
+              </p>
+              <p>
+                MedVarExpires:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate}}
+              </p>
+              <p>
+                MedExaminerName:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName}}
+              </p>
+              <p>
+                MedExaminerPhoneNumber:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr}}
+              </p>
+              <p>
+                MedLicenseNum:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr}}
+              </p>
+              <p>
+                MedExaminerState:{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState}}
+              </p>
+              <p>
+                MedExaminerRegNumber:
+                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr}}
+              </p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="citation">
+            <ion-item slot="header" color="light">
+              <ion-label>Citation(s)</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <div
+                *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstCitationInfo']"
+              >
+                <p>Description : {{doc._CitaDesc}}</p>
+                <p>Violaton Date : {{doc._ViolDt}}</p>
+                <p>Accident Involved : {{doc._Accident}}</p>
+                <p>Commercial Offence : {{doc._CommercialOffense}}</p>
+                <p>Hazardous Material: {{doc._HazardousMaterial}}</p>
+                <p>Disposition Date : {{doc._DispositionDT}}</p>
+                <p>Disposition : {{doc._DispDesc}}</p>
+                <p>Points : {{doc._Point}}</p>
+                <p>Jurisdiction : {{doc._Jurisdiction}}</p>
+                <p>Court : {{doc._CitationCourtDesc}}</p>
+              </div>
+
+              <div
+                *ngIf="orders['previousMVRData'][selectedInd]['_lstCitationInfo'].length ==0"
+              >
+                <p>There is no citation data available.</p>
+              </div>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="withdrawl">
+            <ion-item slot="header" color="light">
+              <ion-label>Withdrawl(s)</ion-label>
+            </ion-item>
+            <div
+              class="ion-padding"
+              slot="content"
+              *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstSuspensionInfo']"
+            >
+              <p>Description : {{doc._SuspDescription}}</p>
+              <p>Withdrawal Type : {{doc._WithdrawalTyp}}</p>
+              <p>Withdrawal Extent : {{doc._WithdrawalExtent}}</p>
+              <p>Jurisdiction : {{doc._Jurisdiction}}</p>
+              <p>Served Type : {{doc._ServedTyp}}</p>
+              <p>Served Date : {{doc._ServedDt}}</p>
+              <p>Violation Date : {{doc._ViolationDt}}</p>
+              <p>Effective Date : {{doc._SuspDt}}</p>
+              <p>Withdrawl Expiry Date : {{doc._SuspExpirationDT}}</p>
+              <p>Reinstatement Date : {{doc._ReinstatementDt}}</p>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <h4 class="font-13" *ngIf="orders['previousMVRData']?.length>0">
+    <b>MOTOR VEHICLE REPORT</b>
+  </h4>
+  <ion-card
+    *ngFor="let item of orders['previousMVRData']; let i = index"
+    style="margin-inline: 0px !important"
+    class="black-color"
+  >
+    <ion-card-content>
+      <p><b>Service Ordered :</b> Motor Vehicle Report</p>
+      <p><b>Term :</b>&nbsp;{{item['_objMVROrderInfo']._Term}}</p>
+      <p>
+        <b>Confirmation No :</b>
+        &nbsp;{{item['_objMVROrderInfo']._TransactionID}}
+      </p>
+      <p>
+        <b>Status :</b>
+        &nbsp;<a href="javascript:void(0);" (click)="viewReport(item,i)"
+          >View Report</a
+        >
+      </p>
+      <p><b>Order Date :</b>&nbsp; {{item['_objMVROrderInfo']._ServiceDT}}</p>
+    </ion-card-content>
+  </ion-card>
+  <br />
+  <h4 class="font-13" *ngIf="orders['licenseOrderStatus']?.length>0">
+    <b>ORDER STATUS</b>
+  </h4>
+  <ion-card
+    *ngFor="let item of orders['licenseOrderStatus']"
+    class="black-color"
+  >
+    <ion-card-content>
+      <p><b>Service Ordered :</b> {{item.m_ServiceDescription}}</p>
+      <p><b>Class Code :</b> {{item.m_ClassCode}}</p>
+      <p><b>Status :</b> {{item.m_StatusCode}}</p>
+      <p><b>Status Date :</b> {{item.m_StatusDate}}</p>
+    </ion-card-content>
+  </ion-card>
+  <br />
+  <h4 class="font-13" *ngIf="orders['lstProcessedDocumentServices']?.length>0">
+    ONLINE RECEIPTS
+  </h4>
+  <ion-card
+    *ngFor="let item of orders['lstProcessedDocumentServices']"
+    class="black-color"
+  >
+    <ion-card-content>
+      <p><b>Service Ordered :</b> {{item._ServiceDescription}}</p>
+      <p><b>Dcoument Class :</b> {{item._LicenseClassCD}}</p>
+      <p><b>Order Date :</b> {{item._ServiceTimeStamp}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="isLoadFinish">
+    <div class="row">
+      <div class="col">
+        <h4 class="text-center font-13"><b>Order Status Explanation</b></h4>
+        <hr style="border: 1px solid #999" />
+      </div>
+    </div>
+    <div class="row vertialign">
+      <div class="col">
+        <table
+          width="100%"
+          style="border-collapse: unset; border-spacing: 11px; font-size: 13px"
+        >
+          <tr>
+            <td class="bluetext" style="width: 90px">Approved</td>
+            <td>Your order is being processed for mailing</td>
+          </tr>
+          <tr>
+            <td class="bluetext" id="orderstatus_mailorderstatus">Mailed</td>
+            <td>Your order has been mailed</td>
+          </tr>
+          <tr>
+            <td class="bluetext" id="orderstatus_pendorderstatus">Pending</td>
+            <td>
+              We appreciate your patiance; your order still being processed
+            </td>
+          </tr>
+          <tr>
+            <td class="bluetext" id="orderstatus_denieorderstatus">Denied</td>
+            <td>
+              Unfortunately, we were unable to process your order online, Please
+              visit a Customer Service Center
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h4 class="text-center font-13" id="orderstatus_oseorderstatus1">
+          <b>For Hire Order Status Explanation</b>
+        </h4>
+        <hr style="border: 1px solid #999" />
+      </div>
+    </div>
+    <div class="row vertialign">
+      <div class="col">
+        <table
+          width="100%"
+          style="border-collapse: unset; border-spacing: 11px; font-size: 13px"
+        >
+          <tr>
+            <td
+              class="bluetext"
+              style="width: 90px"
+              id="orderstatus_aprvorderstatus"
+            >
+              Pending Review
+            </td>
+            <td>
+              We appreciate your patience, your application is still pending
+              review.
+            </td>
+          </tr>
+          <tr>
+            <td class="bluetext" id="orderstatus_mailorderstatus">
+              Under Review
+            </td>
+            <td>
+              We appreciate your patience, your application is still under
+              review.
+            </td>
+          </tr>
+          <tr>
+            <td class="bluetext" id="orderstatus_pendorderstatus">Approved</td>
+            <td>
+              Your application has been approved. An approval letter has been
+              mailed to you.
+            </td>
+          </tr>
+          <tr>
+            <td class="bluetext" id="orderstatus_denieorderstatus">Rejected</td>
+            <td>
+              Your application has been rejected. A rejection letter has been
+              mailed to you. Please allow 5-7 days for postal delivery.
+            </td>
+          </tr>
+          <tr>
+            <td class="bluetext" id="orderstatus_denieorderstatus">Denied</td>
+            <td>
+              Your application has been denied. A denial letter has been mailed
+              to you. Please allow 5-7 days for postal delivery.
+            </td>
+          </tr>
+          <tr>
+            <td class="bluetext" id="orderstatus_denieorderstatus">Appeal</td>
+            <td>
+              Your application is currently under appeal. You will be notified
+              by mail when the appeal process is complete.
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</ion-content>
