@@ -21,7 +21,24 @@ export class LoginPage implements OnInit {
   isValidFingerPrint: boolean = false;
 
   secretKey = 'test123';
-
+  cardList: any = [
+    {
+      logo: "assets/imgs/dollar.png",
+      name: "Pay a super speeder fee, reinstatement fee or pending suspensions.",
+    },
+    {
+      logo: "assets/imgs/edit.png",
+      name: "Forms to complete before visiting a customer service center.",
+    },
+    {
+      logo: "assets/imgs/date.png",
+      name: "Make a road test a reservation",
+    },
+    {
+      logo: "assets/imgs/cert.png",
+      name: "Verify or print a certificate for a defensive driving or risk reduction course.",
+    },
+  ];
   constructor(
     public formBuilder: FormBuilder,
     private Apiauth: ApiService,
@@ -279,16 +296,14 @@ export class LoginPage implements OnInit {
     );
   }
 
-  async touchIdChange(e) {
-    console.log(e);
-    if (e.detail.checked) {
+  async touchIdChange() {
       const result = await NativeBiometric.isAvailable();
       console.log(JSON.stringify(result));
       console.log(result);
       if (result.isAvailable) {
         this.touchIdValue = true;
-        //localStorage.setItem('fingerPrint', 'true');
-        //this.performBiometricVerificatin()
+        localStorage.setItem('fingerPrint', 'true');
+        this.performBiometricVerificatin()
       } else {
         this.touchIdValue = false;
         localStorage.setItem('fingerPrint', 'false');
@@ -296,7 +311,6 @@ export class LoginPage implements OnInit {
           "Please register your fingerprints or face ID through your mobile device's settings before using this feature"
         );
       }
-    }
   }
 
   async performBiometricVerificatin() {

@@ -7,67 +7,61 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" style="--background: #f4f5f6">
+<br>
+<div class="divMaxWidth">
   <form [formGroup]="loginForm" (ngSubmit)="clickSubmit()" novalidate>
-    <div align="center">
-      <ion-img src="assets/login-1.jpg" class="login-1"></ion-img>
-      <p
-        class="ion-padding txt-center blue-color max-width font-13 pad-t-0 pad-b-0"
-      >
-        Please sign in with your DDS Online Services Account. No account yet?
-        <a href="#">Sign Up!</a>
-      </p>
-    </div>
-
-    <div align="center" class="ion-padding login-form">
-      <ion-item fill="outline">
-        <ion-label position="floating">Email Address</ion-label>
-        <ion-input
-          type="email"
-          formControlName="userEmail"
-        ></ion-input> </ion-item
-      ><br />
-
-      <ion-item fill="outline">
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" formControlName="userPassword"></ion-input>
-      </ion-item>
-    </div>
-
-    <div align="center">
-      <ion-button
-        type="submit"
-        color="primary"
-        expand="block"
-        class="login-btn"
-        [disabled]="!loginForm.valid"
-        >Login</ion-button
-      >
-      <ion-button
-        color="primary"
-        fill="clear"
-        class="blue-color font-13 txt-trans-none"
-        (click)="forgotpwd()"
-        >Forgot Your Password?</ion-button
-      >
-    </div>
-  </form>
-  <div align="center" class="max-width margin-0-auto toggle-div">
+  <img src="assets/imgs/logo.jpeg" alt="" class="logo" />
+  <ion-card style="padding: 15px 20px">
     <ion-item>
-      <ion-label>Save User ID</ion-label>
-      <ion-toggle></ion-toggle>
+      <ion-input
+        type="email"
+        label="Email Address"
+        labelPlacement="floating"
+        placeholder="Enter email"
+        formControlName="userEmail"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        type="password"
+        label="Password"
+        labelPlacement="floating"
+        placeholder="Enter password"
+        formControlName="userPassword"
+      ></ion-input>
+      <ion-button (click)="touchIdChange()" fill="clear">
+        <ion-icon slot="icon-only" name="finger-print-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    <ion-item class="ion-no-padding ion-no-lines"  lines="none">
+      <ion-checkbox labelPlacement="end" class="checkbox" ></ion-checkbox>
+      <ion-label class="blueClr">Save email address</ion-label>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Enable Touch ID</ion-label>
-      <ion-toggle
-        [(ngModel)]="touchIdValue"
-        (ionChange)="touchIdChange($event)"
-      ></ion-toggle>
-    </ion-item>
-  </div>
-  <br />
+    <ion-button 
+      class="ion-text-uppercase loginBtn" 
+      [disabled]="!loginForm.valid"  
+      type="submit"
+    > Log in </ion-button>
 
+    <div class="forgot" (click)="forgotpwd()">Forgot email address or password?</div>
+  </ion-card>
+</form>
+
+  <ion-button expand="block" class="createAccBtn"> Create Account </ion-button>
+  <ion-row class="ion-no-padding">
+    <ion-col size="6" class="ion-no-padding" *ngFor="let card of cardList">
+      <ion-card class="grid-card">
+        <div><img [src]="card.logo" alt="" /></div>
+        <div>{{card.name}}</div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <div class="forgot privacy">Privacy Policy | Terms and Conditions of Use</div>
+</div>
+  <br>
   <ion-modal
     trigger="open-modal"
     (willDismiss)="modalwilldiscmiss()"

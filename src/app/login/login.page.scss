@@ -1,53 +1,98 @@
-.login-1{
-  max-width: 250px;
-}
-ion-toolbar {
-  --background: #103a84;
-  color: white;
-
-  ion-title {
-    text-align: center;
-    padding-left: 0px;
-    position: relative;
-    left: -16px;
-  }
+ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
 
-.login-form{
-  ion-item{
-    max-width: 320px;
-  }
-}
-
-.max-width{
-  max-width: 320px;
-}
-
-.login-btn {
-  max-width: 320px;
-  --box-shadow: none;
-  --ion-color-base: #103a84 !important;
-}
-
-.toggle-div{
-  ion-item{
-    --padding-start:0px !important;
-    --inner-padding-end: 0px !important;
-    --inner-border-width:0px !important;
-  }
-}
-ion-modal{
-  ion-button{
-    --color:white !important;
+ion-modal {
+  ion-button {
+    --color: white !important;
     font-size: 16px !important;
   }
-  ion-item{
-    --padding-start:0px !important;
-    --inner-padding-end: 0px !important;
-    --inner-border-width:0px !important;
 
-    ion-label{
+  ion-item {
+    --padding-start: 0px !important;
+    --inner-padding-end: 0px !important;
+    --inner-border-width: 0px !important;
+    ion-label {
       font-size: 16px;
     }
   }
+}
+
+
+.logo {
+  width: 70%;
+  margin: auto;
+  display: table;
+}
+
+.header-md::after {
+  display: none;
+}
+
+.checkbox {
+  margin-right: 10px;
+  color: #103a84;
+  font-size: 16px;
+}
+
+.blueClr {
+  color: #103a84;
+  font-size: 15px;
+}
+
+.createAccBtn {
+  width: 70%;
+  margin: auto;
+  margin-top: 20px;
+  --border-radius: 4px;
+  height: 45px;
+  margin-bottom: 10px;
+}
+
+.loginBtn {
+  margin: auto;
+  display: table;
+  margin-top: 15px;
+  width: 40%;
+  height: 40px;
+  --border-radius: 3px;
+  --background: #666666;
+}
+
+.forgot {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15px;
+  color: #103a84;
+}
+
+.privacy {
+  width: 100%;
+}
+
+.grid-card {
+  min-height: 120px;
+
+  img {
+    margin: auto;
+    display: table;
+    height: 35px;
+  }
+
+  div {
+    text-align: center;
+    color: #103a84;
+    margin: 5px 0px;
+    padding: 0px 5px;
+  }
+}
+
+.divMaxWidth {
+  max-width: 350px;
+  margin: auto;
 }
