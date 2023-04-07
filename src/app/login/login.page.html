@@ -24,20 +24,24 @@
     </ion-item>
     <ion-item>
       <ion-input
-        type="password"
+        [type]="showPassword ? 'password':'text'"
         label="Password"
         labelPlacement="floating"
         placeholder="Enter password"
         formControlName="userPassword"
       ></ion-input>
-      <ion-button (click)="touchIdChange()" fill="clear">
-        <ion-icon slot="icon-only" name="finger-print-outline"></ion-icon>
+      <ion-button (click)="togglePassword()" fill="clear">
+        <ion-icon slot="icon-only" [name]="showPassword? 'eye-outline': 'eye-off-outline'"></ion-icon>
       </ion-button>
     </ion-item>
     
-    <ion-item class="ion-no-padding ion-no-lines"  lines="none">
+    <ion-item class="ion-no-padding"  lines="none">
       <ion-checkbox labelPlacement="end" class="checkbox" ></ion-checkbox>
       <ion-label class="blueClr">Save email address</ion-label>
+    </ion-item>
+    <ion-item class="ion-no-padding"  lines="none">
+      <ion-icon slot="start" name="finger-print-outline" style="margin-right:5px;color: #103a84"></ion-icon>
+      <ion-label class="blueClr">Fingerprint Login</ion-label>
     </ion-item>
 
     <ion-button 

@@ -39,6 +39,7 @@ export class LoginPage implements OnInit {
       name: "Verify or print a certificate for a defensive driving or risk reduction course.",
     },
   ];
+  showPassword: boolean;
   constructor(
     public formBuilder: FormBuilder,
     private Apiauth: ApiService,
@@ -63,7 +64,7 @@ export class LoginPage implements OnInit {
   // good@gmail.com - Password@1
 
   ngOnInit() {
-
+    this.showPassword = true;
     let isFingerPrintSetupSuccess = localStorage.getItem('fingerPrint')
       ? localStorage.getItem('fingerPrint')
       : '';
@@ -92,6 +93,10 @@ export class LoginPage implements OnInit {
       };
       this.submitForm(params);
     }
+  }
+
+  togglePassword(){
+    this.showPassword = !this.showPassword;
   }
 
   generateToken() {
