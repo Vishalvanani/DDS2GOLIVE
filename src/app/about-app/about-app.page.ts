@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-about-app',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about-app.page.scss'],
 })
 export class AboutAppPage implements OnInit {
+  appVersion: any;
 
   constructor() { }
 
   ngOnInit() {
+    App.getInfo().then((res:any) => {
+      this.appVersion = res.version;
+    });
   }
 
 }
