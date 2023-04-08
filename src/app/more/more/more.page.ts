@@ -28,6 +28,12 @@ export class MorePage implements OnInit {
   privacy(){
     this.router.navigate(['privacy-satement'])
   }
+  appInfo(){
+    this.router.navigate(['about-app'])
+  }
+  manageBiomatric(){
+    this.router.navigate(['manage-biometric'])
+  }
 
   async howdo(){
     await Browser.open({ url: 'https://dds.georgia.gov/georgia-licenseid' });

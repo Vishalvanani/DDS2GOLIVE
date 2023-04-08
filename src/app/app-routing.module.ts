@@ -46,6 +46,14 @@ const routes: Routes = [
   {
     path: 'privacy-satement',
     loadChildren: () => import('./more/privacy-satement/privacy-satement.module').then( m => m.PrivacySatementPageModule)
+  },
+  {
+    path: 'about-app',
+    loadChildren: () => import('./about-app/about-app.module').then( m => m.AboutAppPageModule)
+  },
+  {
+    path: 'manage-biometric',
+    loadChildren: () => import('./manage-biometric/manage-biometric.module').then( m => m.ManageBiometricPageModule)
   }
 
 ];
