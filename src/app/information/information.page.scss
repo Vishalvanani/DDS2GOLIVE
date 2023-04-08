@@ -43,3 +43,39 @@ ion-card{
     top: -7px;
     left: 4px;
 }
+
+.welcomeMsg{
+    font-size: 22px;
+    margin: 10px;
+    letter-spacing: 0.5px;
+}
+.cardTitle{
+    font-size: 17px;
+    letter-spacing: 0.2px;
+}
+.cardContent{
+    padding: 5px;
+    .col1{
+        color: #103A84;
+        font-size: 14px;
+        letter-spacing: 0.3px;
+        padding: 5px 2px;
+    }
+    .col2{
+        font-size: 14px;
+        padding: 5px 2px;
+        font-weight: 500;
+    }
+    .heartIcon{
+        font-size: 25px;
+        color: red;
+    }
+    .starIcon{
+        font-size: 22px;
+        color: #103A84;
+    }
+    .feesPoint{
+        font-size: 35px;
+        color: #000;
+    }
+}

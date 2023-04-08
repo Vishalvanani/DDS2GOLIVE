@@ -17,8 +17,91 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-card class="real-id-card" *ngIf="INFO && segment =='info' ">
-    <ion-card-header>
+  <div class="real-id-card" *ngIf="INFO && segment =='info' ">
+   <div class="welcomeMsg">Welcome, georgia sample</div>
+    <ion-card style="margin-bottom: 15px;">
+      <ion-card-header color="primary">
+        <ion-card-title class="cardTitle">Driver Information</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="cardContent">
+        <ion-row>
+          <ion-col size="6" class="col1">Driver License Number:</ion-col>
+          <ion-col size="6" class="col2">0123456789</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Real ID:</ion-col>
+          <ion-col size="6" class="col2"><ion-icon name="star" class="starIcon"></ion-icon></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Date of Birth:</ion-col>
+          <ion-col size="6" class="col2">03/14/1986</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Address on the License:</ion-col>
+          <ion-col size="6" class="col2">2206 Eastview Parkwat Conyers Ga. 30013-5755 </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Blood Type:</ion-col>
+          <ion-col size="6" class="col2">B+</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Donor:</ion-col>
+          <ion-col size="6" class="col2">
+            <ion-icon name="heart" class="heartIcon"></ion-icon>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row class="border-t-1-ee">
+          <ion-col class="border-r-1-ee">
+            <p class="blue-color-icon">Existing Fees</p>
+            <div class="feesPoint">$0.00</div>
+          </ion-col>
+          <ion-col class="ion-text-center">
+            <p class="blue-color-icon">Points</p>
+            <div class="feesPoint">0</div>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-card>
+      <ion-card-header color="primary">
+        <ion-card-title class="cardTitle">License Information</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="cardContent">
+        <ion-row>
+          <ion-col size="6" class="col1">License Type:</ion-col>
+          <ion-col size="6" class="col2">Regular</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Class:</ion-col>
+          <ion-col size="6" class="col2">C</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Status:</ion-col>
+          <ion-col size="6" class="col2" style="color: #14c614;">Valid</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Issue Date:</ion-col>
+          <ion-col size="6" class="col2">08/13/2018</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Expiration Date:</ion-col>
+          <ion-col size="6" class="col2">08/06/2026</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Endorsements:</ion-col>
+          <ion-col size="6" class="col2">------</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Restrictions:</ion-col>
+          <ion-col size="6" class="col2">B - Corrective Lenses</ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+     <ion-card-header>
       <ion-item lines="none">
         <ion-label>License # {{INFO.licenseInfo.lic_number}}</ion-label>
         <ion-button slot="end" *ngIf="INFO.driverInfo.realID =='Y' ">
@@ -103,8 +186,9 @@
           >
         </ion-col>
       </ion-row>
-    </ion-card-content>
+    </ion-card-content> 
   </ion-card>
+  </div>
   <ion-card *ngIf="INFO && segment =='info' ">
     <ion-card-header>
       <ion-card-title>Driver Information</ion-card-title>
@@ -244,7 +328,7 @@
         </p>
       </div>
     </ion-accordion>
-  </ion-accordion-group>
+  </ion-accordion-group> 
 
   <!-- <div align="center">
     <ion-button (click)="wantMore()">Want More?</ion-button>
