@@ -35,13 +35,14 @@
       </ion-button>
     </ion-item>
     
-    <ion-item class="ion-no-padding"  lines="none">
+    <ion-item class="ion-no-padding" lines="none">
       <ion-checkbox labelPlacement="end" class="checkbox" ></ion-checkbox>
-      <ion-label class="blueClr">Save email address</ion-label>
+      <div class="blueClr">Save email address</div>
     </ion-item>
-    <ion-item class="ion-no-padding"  lines="none">
+
+    <ion-item class="ion-no-padding" lines="none" (click)="touchIdChange()">
       <ion-icon slot="start" name="finger-print-outline" style="margin-right:5px;color: #103a84"></ion-icon>
-      <ion-label class="blueClr">Fingerprint Login</ion-label>
+      <div class="blueClr">Fingerprint Login</div>
     </ion-item>
 
     <ion-button 
