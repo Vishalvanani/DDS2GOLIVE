@@ -26,23 +26,23 @@
       <ion-card-content class="cardContent">
         <ion-row>
           <ion-col size="6" class="col1">Driver License Number:</ion-col>
-          <ion-col size="6" class="col2">0123456789</ion-col>
+          <ion-col size="6" class="col2">#{{INFO.licenseInfo.lic_number}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Real ID:</ion-col>
-          <ion-col size="6" class="col2"><ion-icon name="star" class="starIcon"></ion-icon></ion-col>
+          <ion-col size="6" class="col2"><ion-icon name="star" class="starIcon" *ngIf="INFO.driverInfo.realID =='Y'"></ion-icon></ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Date of Birth:</ion-col>
-          <ion-col size="6" class="col2">03/14/1986</ion-col>
+          <ion-col size="6" class="col2">{{INFO.driverInfo.dob}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Address on the License:</ion-col>
-          <ion-col size="6" class="col2">2206 Eastview Parkwat Conyers Ga. 30013-5755 </ion-col>
+          <ion-col size="6" class="col2">{{INFO.addressInfo.addr_type}} {{INFO.addressInfo.city}} {{INFO.addressInfo.state}} {{INFO.addressInfo.zipcode}} </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Blood Type:</ion-col>
-          <ion-col size="6" class="col2">B+</ion-col>
+          <ion-col size="6" class="col2">N/A</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Donor:</ion-col>
@@ -54,11 +54,11 @@
         <ion-row class="border-t-1-ee">
           <ion-col class="border-r-1-ee">
             <p class="blue-color-icon">Existing Fees</p>
-            <div class="feesPoint">$0.00</div>
+            <div class="feesPoint">${{INFO.driverInfo.existfee}}</div>
           </ion-col>
           <ion-col class="ion-text-center">
             <p class="blue-color-icon">Points</p>
-            <div class="feesPoint">0</div>
+            <div class="feesPoint">{{INFO.driverInfo.points}}</div>
           </ion-col>
         </ion-row>
       </ion-card-content>
@@ -71,36 +71,44 @@
       <ion-card-content class="cardContent">
         <ion-row>
           <ion-col size="6" class="col1">License Type:</ion-col>
-          <ion-col size="6" class="col2">Regular</ion-col>
+          <ion-col size="6" class="col2">{{INFO.licenseEndors.rsp_lic_type_descField}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Class:</ion-col>
-          <ion-col size="6" class="col2">C</ion-col>
+          <ion-col size="6" class="col2">{{INFO.licenseEndors.rsp_lic_class_cdField}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Status:</ion-col>
-          <ion-col size="6" class="col2" style="color: #14c614;">Valid</ion-col>
+          <ion-col size="6" class="col2" [ngClass]="INFO.licenseInfo.lic_status == 'VALID' ?'neon-color-icon': 'red-color-icon'">{{INFO.licenseInfo.lic_status}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Issue Date:</ion-col>
-          <ion-col size="6" class="col2">08/13/2018</ion-col>
+          <ion-col size="6" class="col2">{{INFO.licenseEndors.rsp_lic_issu_dtField}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Expiration Date:</ion-col>
-          <ion-col size="6" class="col2">08/06/2026</ion-col>
+          <ion-col size="6" class="col2">{{INFO.licenseEndors.rsp_lic_expr_dtField}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Endorsements:</ion-col>
-          <ion-col size="6" class="col2">------</ion-col>
+          <ion-col size="6" class="col2">
+            <p *ngFor="let e of INFO.licenseEndors['rsp_lic_endr_arrayField']"  class="font-14">
+              <span *ngIf="e.rsp_lic_endr_descField">{{e.rsp_lic_endr_descField}}</span>
+            </p>
+          </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Restrictions:</ion-col>
-          <ion-col size="6" class="col2">B - Corrective Lenses</ion-col>
+          <ion-col size="6" class="col2">
+            <p *ngFor="let r of INFO.licenseEndors['rsp_lic_rstr_arrayField']" class="font-14">
+              <span class="blue-color-icon" *ngIf="r.rsp_lic_rstr_descField">{{r.rsp_lic_rstr_descField}}</span>
+            </p>
+        </ion-col>
         </ion-row>
       </ion-card-content>
     </ion-card>
     
-    <ion-card>
+    <!-- <ion-card>
      <ion-card-header>
       <ion-item lines="none">
         <ion-label>License # {{INFO.licenseInfo.lic_number}}</ion-label>
@@ -122,7 +130,7 @@
           [name]="lic.isCheck? 'checkmark-outline':'close-outline'"
           [ngClass]="lic.isCheck?'green-color-icon': 'red-color-icon' "
         ></ion-icon>
-      </ion-item>
+      </ion-item> -->
 
       <!-- <ion-item lines="none">
         <ion-icon
@@ -172,7 +180,7 @@
           [ngClass]="LicenseRealId['rsp_visn_corr_flField'] =='Y'?'green-color-icon': 'red-color-icon' "
         ></ion-icon>
       </ion-item> -->
-      <ion-row class="border-t-1-ee pad-t-5">
+      <!-- <ion-row class="border-t-1-ee pad-t-5">
         <ion-col class="border-r-1-ee">
           <p>Existing Fees</p>
           <span class="blue-color-icon font-20"
@@ -187,9 +195,9 @@
         </ion-col>
       </ion-row>
     </ion-card-content> 
-  </ion-card>
+  </ion-card> -->
   </div>
-  <ion-card *ngIf="INFO && segment =='info' ">
+  <!-- <ion-card *ngIf="INFO && segment =='info' ">
     <ion-card-header>
       <ion-card-title>Driver Information</ion-card-title>
     </ion-card-header>
@@ -270,7 +278,7 @@
         </ion-col>
       </ion-row>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
   <ion-accordion-group *ngIf="INFO && segment =='history' ">
     <ion-accordion value="first">
