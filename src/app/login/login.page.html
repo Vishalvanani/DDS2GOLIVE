@@ -30,17 +30,22 @@
         placeholder="Enter password"
         formControlName="userPassword"
       ></ion-input>
-      <ion-button (click)="togglePassword()" fill="clear">
+      <ion-button (click)="toggleEye()" fill="clear">
         <ion-icon slot="icon-only" [name]="showPassword? 'eye-outline': 'eye-off-outline'"></ion-icon>
       </ion-button>
     </ion-item>
     
     <ion-item class="ion-no-padding" lines="none">
-      <ion-checkbox labelPlacement="end" class="checkbox" ></ion-checkbox>
+      <ion-checkbox 
+      labelPlacement="end" 
+      class="checkbox"
+      formControlName="saveId"
+      (ionChange)="saveIdChange($event)"
+      ></ion-checkbox>
       <div class="blueClr">Save email address</div>
     </ion-item>
 
-    <ion-item class="ion-no-padding" lines="none" (click)="touchIdChange()">
+    <ion-item class="ion-no-padding" lines="none" (click)="fingerPrintLogin()">
       <ion-icon slot="start" name="finger-print-outline" style="margin-right:5px;color: #103a84"></ion-icon>
       <div class="blueClr">Fingerprint Login</div>
     </ion-item>
@@ -130,4 +135,85 @@
       </ion-footer>
     </ng-template>
   </ion-modal>
+
+  <ion-modal
+    trigger="fingerprint-open-modal"
+    (willDismiss)="fingerPrintModalDismiss()"
+    [isOpen]="isfingerprintModalOpen"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Terms and Conditions</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeFingerprintModal()"
+              ><ion-icon name="close-circle-outline"></ion-icon
+            ></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div style="text-align: center">
+          <img src="/assets/fprint.jpg" class="" />
+        </div>
+        <p>
+          <b>
+            Terms and Conditions for Enabling Biometric Authentication using
+            Touch ID, Fingerprint or Face ID with the Department of Driver
+            Services (DDS) Mobile Services
+          </b>
+        </p>
+        <p>
+          To enable biometric authentication for sign in, you are required to
+          save your DDS User ID on this device.
+        </p>
+        <p>
+          DDS does not control the functionality of fingerprint, Touch ID or
+          Face ID and does not have access to your fingerprint(s) or facial
+          recognition information. You Understand and agree that any fingerprint
+          stored on this device can be used to access your accounts in DDS
+          Mobile Services. For more information on how biometric functionality
+          works for your device, please refer to your device manufacture's
+          support resources. There may be circumstances where biometric
+          authentication will not function as expected and sign in will require
+          your Passcode.
+        </p>
+        <p>
+          By choosing Accept, you agree to these Terms and Conditions. Choose
+          Decline to cancel set up.
+        </p>
+        <br />
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-row>
+            <ion-col>
+              <ion-button color="medium" (click)="declineTerms()"
+                >DECLINE</ion-button
+              ></ion-col
+            >
+            <ion-col>
+              <ion-button color="primary" (click)="acceptTerms()"
+                >ACCEPT</ion-button
+              ></ion-col
+            >
+          </ion-row>
+        </ion-toolbar>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment value="location" style="height: 50px;" color="primary">
+      <ion-segment-button value="location">
+        <ion-icon aria-hidden="true" name="business-outline"></ion-icon>
+        <ion-label>Location</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="more">
+        <ion-icon aria-hidden="true" name="ellipsis-horizontal-outline"></ion-icon>
+        <ion-label>More</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

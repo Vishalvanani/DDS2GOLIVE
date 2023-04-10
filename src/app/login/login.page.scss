@@ -1,13 +1,26 @@
 ion-modal {
   ion-button {
     font-size: 16px !important;
-  }
+}
 
   ion-item {
     --padding-start: 0px !important;
     --inner-padding-end: 0px !important;
-    --inner-border-width: 0px !important;
-    ion-label {
+    --inner-border-width:0px !important;
+  }
+}
+ion-modal{
+  ion-button{
+    margin: auto;
+    display: table;
+    width: 100%;
+  }
+  ion-item{
+    --padding-start:0px !important;
+    --inner-padding-end: 0px !important;
+    --inner-border-width:0px !important;
+
+    ion-label{
       font-size: 16px;
     }
   }
@@ -16,23 +29,18 @@ ion-modal {
 
 .logo {
   width: 70%;
-  margin: auto;
-  display: table;
+    margin: auto;
+    display: table;
 }
-
-.header-md::after {
-  display: none;
+.login-hd::after {
+  background-image: none !important;
 }
 
 .checkbox {
-  margin-right: 10px;
-  color: #103a84;
+  margin: 8px 16px;
+  color: #294980 !important;
   font-size: 16px;
-}
-
-.blueClr {
-  color: #103a84;
-  font-size: 15px;
+  margin-left: 0px;
 }
 
 .createAccBtn {
@@ -66,8 +74,8 @@ ion-modal {
 }
 
 .grid-card {
-  min-height: 120px;
-
+  min-height: 130px;
+  padding: 5px;
   img {
     margin: auto;
     display: table;
@@ -76,13 +84,18 @@ ion-modal {
 
   div {
     text-align: center;
-    color: #103a84;
+    color: #294980;
     margin: 5px 0px;
-    padding: 0px 5px;
   }
 }
 
-.divMaxWidth {
-  max-width: 350px;
-  margin: auto;
+
+.pad-s-0{
+  --padding-start:0px !important;
+}
+.no-border{
+  --border-color: transparent !important;
+}
+.blue-color{
+  color: #294980;
 }

@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { NativeBiometric } from 'capacitor-native-biometric';
 import { AES, enc, mode, pad } from 'crypto-js';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -17,10 +16,12 @@ export class LoginPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
   securityCode: any = '';
   isModalOpen: boolean = false;
+  isfingerprintModalOpen: boolean = false;
   touchIdValue: boolean = false;
   isValidFingerPrint: boolean = false;
 
   secretKey = 'test123';
+  showPassword: boolean = false;
   cardList: any = [
     {
       logo: "assets/imgs/dollar.png",
@@ -39,7 +40,6 @@ export class LoginPage implements OnInit {
       name: "Verify or print a certificate for a defensive driving or risk reduction course.",
     },
   ];
-  showPassword: boolean;
   constructor(
     public formBuilder: FormBuilder,
     private Apiauth: ApiService,
@@ -53,30 +53,30 @@ export class LoginPage implements OnInit {
           Validators.required,
           Validators.minLength(1),
           Validators.pattern(
-            /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/
+            /^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,3})$/
           ),
         ],
       ],
       userPassword: ['', [Validators.required, Validators.minLength(1)]],
+      saveId: [],
+      //biometric: [],
     });
   }
 
   // good@gmail.com - Password@1
 
   ngOnInit() {
-    this.showPassword = true;
-    let isFingerPrintSetupSuccess = localStorage.getItem('fingerPrint')
-      ? localStorage.getItem('fingerPrint')
-      : '';
-    //alert("isFingerPrintSetupSuccess : "+isFingerPrintSetupSuccess)
-    if (isFingerPrintSetupSuccess) this.touchIdValue = true;
-
-    let isUserExists: any = localStorage.getItem('user')
-      ? localStorage.getItem('user')
-      : '';
-    if (isUserExists && isFingerPrintSetupSuccess) {
-      this.performBiometricVerificatin();
+    if (localStorage.getItem('saveid')) {
+      this.loginForm?.get('saveId')?.setValue(true);
+      let user: any = localStorage.getItem('user');
+      let dec = this.decrypt(user);
+      let userId = JSON.parse(dec);
+      this.loginForm?.get('userEmail')?.setValue(userId.UserID);
     }
+  }
+
+  toggleEye() {
+    this.showPassword = !this.showPassword;
   }
 
   autoLogin() {
@@ -93,10 +93,6 @@ export class LoginPage implements OnInit {
       };
       this.submitForm(params);
     }
-  }
-
-  togglePassword(){
-    this.showPassword = !this.showPassword;
   }
 
   generateToken() {
@@ -141,6 +137,7 @@ export class LoginPage implements OnInit {
       UserID: ionform.userEmail,
     };
 
+    console.log(this.loginForm.value);
     this.submitForm(params);
   }
 
@@ -167,11 +164,18 @@ export class LoginPage implements OnInit {
             obj.Password = params.Password;
 
             localStorage.setItem('user', this.encrypt(JSON.stringify(obj)));
+            let saveIDValue = this.loginForm.get('saveId')?.value;
+
+            if (saveIDValue == true) {
+              localStorage.setItem('saveid', 'true');
+            } else if (!saveIDValue) {
+              localStorage.removeItem('saveid');
+            }
+
             if (this.touchIdValue) {
               localStorage.setItem('fingerPrint', 'true');
             }
             await this.filterResp(resp);
-            //this.navToPayzee();
             this.setOpen(true);
           } else {
             this.shared.presentAlert(respDriver.message);
@@ -209,6 +213,8 @@ export class LoginPage implements OnInit {
       realID: respDriver['rsp_realid_flField'],
       points: respDriver['rsp_pointsField'],
       existfee: existfee,
+      blood_type: respDriver['rsp_blood_typeField'],
+      donor: respDriver['rsp_organ_donor_flField'] == 'Y' ? 'YES' : 'NO',
     };
     ARR.addressInfo = {
       addr_type:
@@ -260,9 +266,13 @@ export class LoginPage implements OnInit {
     this.isModalOpen = false;
   }
 
+  fingerPrintModalDismiss() {
+    this.isfingerprintModalOpen = false;
+  }
+
   closeModal() {
     this.modal.dismiss();
-    this.router.navigate(['/home']);
+    //this.router.navigate(['/login']);
   }
 
   validateSecurityCode() {
@@ -301,21 +311,83 @@ export class LoginPage implements OnInit {
     );
   }
 
-  async touchIdChange() {
-      const result = await NativeBiometric.isAvailable();
-      console.log(JSON.stringify(result));
-      console.log(result);
-      if (result.isAvailable) {
-        this.touchIdValue = true;
-        localStorage.setItem('fingerPrint', 'true');
-        this.performBiometricVerificatin()
+  saveIdChange(e) {
+    console.log(e.detail.checked);
+  }
+
+  // async touchIdChange(e) {
+  //   console.log(e);
+  //   if (e.detail.checked) {
+  //     const result = await NativeBiometric.isAvailable();
+  //     console.log(JSON.stringify(result));
+  //     console.log(result);
+  //     if (result.isAvailable) {
+  //       this.touchIdValue = true;
+  //       //localStorage.setItem('fingerPrint', 'true');
+  //       //this.performBiometricVerificatin()
+  //     } else {
+  //       this.touchIdValue = false;
+  //       localStorage.setItem('fingerPrint', 'false');
+  //       alert(
+  //         "Please register your fingerprints or face ID through your mobile device's settings before using this feature"
+  //       );
+  //     }
+  //   }
+  // }
+
+  async fingerPrintLogin() {
+    const result = await NativeBiometric.isAvailable();
+
+    if (result.isAvailable) {
+      let isTermsAccepted = localStorage.getItem('bioterms');
+
+      if (!isTermsAccepted || isTermsAccepted == 'false') {
+        this.isfingerprintModalOpen = true;
       } else {
-        this.touchIdValue = false;
-        localStorage.setItem('fingerPrint', 'false');
-        alert(
-          "Please register your fingerprints or face ID through your mobile device's settings before using this feature"
-        );
+        this.makeBiometricLogin();
       }
+    } else {
+      this.touchIdValue = false;
+      localStorage.setItem('fingerPrint', 'false');
+      alert(
+        "Please register your fingerprints or face ID through your mobile device's settings before using this feature"
+      );
+    }
+  }
+
+  closeFingerprintModal() {
+    this.isfingerprintModalOpen = false;
+  }
+
+  acceptTerms() {
+    localStorage.setItem('bioterms', 'true');
+    this.touchIdValue = true;
+    this.closeFingerprintModal();
+  }
+
+  declineTerms() {
+    this.touchIdValue = false;
+    this.closeFingerprintModal();
+    localStorage.setItem('bioterms', 'false');
+    localStorage.setItem('fingerPrint', 'false');
+  }
+
+  makeBiometricLogin() {
+    let isFingerPrintSetupSuccess = localStorage.getItem('fingerPrint')
+      ? localStorage.getItem('fingerPrint')
+      : '';
+
+    /*  if (isFingerPrintSetupSuccess == 'true') {
+      this.touchIdValue = true;
+      //this.loginForm.get('biometric')?.setValue(true);
+    } */
+
+    let isUserExists: any = localStorage.getItem('user')
+      ? localStorage.getItem('user')
+      : '';
+    if (isUserExists && isFingerPrintSetupSuccess == 'true') {
+      this.performBiometricVerificatin();
+    }
   }
 
   async performBiometricVerificatin() {
