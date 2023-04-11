@@ -1,6 +1,8 @@
-<ion-view class="viewcontainer" cache-view="false">
 <ion-header [translucent]="true">
     <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
       <ion-buttons slot="end" (click)="auth.logoutApp()">
         <ion-icon name="log-out-outline" class="font-25"></ion-icon>
       </ion-buttons>
@@ -10,6 +12,7 @@
       </ion-segment>
   </ion-toolbar>
   </ion-header>
+<ion-view class="viewcontainer" cache-view="false">
   <ion-content>
     <ion-searchbar style="background:white;" [debounce]="1000" (ionChange)="searchhandleChange($event)" (ionClear)="searchcancel($event)"></ion-searchbar>
     <div class="container"  [ngSwitch]="MapSegment">

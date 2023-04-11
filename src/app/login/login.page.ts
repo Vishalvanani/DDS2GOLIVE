@@ -135,6 +135,14 @@ export class LoginPage implements OnInit {
   navToPayzee() {
     this.router.navigate(['payeezy-payment']);
   }
+  
+  more() {
+    this.router.navigate(['more']);
+  }
+
+  location() {
+    this.router.navigate(['location']);
+  }
 
   async clickSubmit() {
     let ionform = this.loginForm.value;
