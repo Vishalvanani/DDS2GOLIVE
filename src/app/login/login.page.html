@@ -62,7 +62,7 @@
 
   <ion-button expand="block" class="createAccBtn"> Create Account </ion-button>
   <ion-row class="ion-no-padding">
-    <ion-col size="6" class="ion-no-padding" *ngFor="let card of cardList">
+    <ion-col size="6" class="ion-no-padding" *ngFor="let card of cardList"  (click)="openinAppBrowser(card.url)">
       <ion-card class="grid-card">
         <div><img [src]="card.logo" alt="" /></div>
         <div>{{card.name}}</div>

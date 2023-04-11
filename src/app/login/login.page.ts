@@ -26,18 +26,22 @@ export class LoginPage implements OnInit {
     {
       logo: "assets/imgs/dollar.png",
       name: "Pay a super speeder fee, reinstatement fee or pending suspensions.",
+      url: "https://dds.georgia.gov/georgia-licenseid"
     },
     {
       logo: "assets/imgs/edit.png",
       name: "Forms to complete before visiting a customer service center.",
+      url: "https://dds.georgia.gov/georgia-licenseid"
     },
     {
       logo: "assets/imgs/date.png",
       name: "Make a road test a reservation",
+      url: "https://dds.georgia.gov/georgia-licenseid"
     },
     {
       logo: "assets/imgs/cert.png",
       name: "Verify or print a certificate for a defensive driving or risk reduction course.",
+      url: "https://dds.georgia.gov/georgia-licenseid"
     },
   ];
   constructor(
@@ -73,6 +77,10 @@ export class LoginPage implements OnInit {
       let userId = JSON.parse(dec);
       this.loginForm?.get('userEmail')?.setValue(userId.UserID);
     }
+  }
+
+  openinAppBrowser(url){
+    this.shared.openInappbrowser(url)
   }
 
   toggleEye() {
