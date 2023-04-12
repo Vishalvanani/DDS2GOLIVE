@@ -16,7 +16,7 @@
     </ion-item>
     <ion-item>
       <ion-input
-        [type]="showPassword ? 'password':'text'"
+        [type]="showPassword ? 'text':'password'"
         label="Password"
         labelPlacement="floating"
         placeholder="Enter password"
@@ -52,7 +52,7 @@
   </ion-card>
 </form>
 
-  <ion-button expand="block" class="createAccBtn"> Create Account </ion-button>
+  <ion-button expand="block" class="createAccBtn" (click)="createAcc()"> Create Account </ion-button>
   <ion-row class="ion-no-padding">
     <ion-col size="6" class="ion-no-padding" *ngFor="let card of cardList"  (click)="openinAppBrowser(card.url)">
       <ion-card class="grid-card">

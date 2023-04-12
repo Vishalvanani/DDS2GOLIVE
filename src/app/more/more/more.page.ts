@@ -10,11 +10,13 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./more.page.scss'],
 })
 export class MorePage implements OnInit {
+  isUserExists: string;
 
   
   constructor(private shared:SharedService,private router:Router,public auth: ApiService) { }
 
   ngOnInit() {
+    this.isUserExists = localStorage.getItem('user') ? localStorage.getItem('user') : '';
   }
 
   openinAppBrowser(url){

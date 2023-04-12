@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>More</ion-title>
-    <ion-buttons slot="end" (click)="auth.logoutApp()">
+    <ion-buttons slot="end" (click)="auth.logoutApp()" *ngIf="isUserExists">
       <ion-icon name="log-out-outline" class="font-25"></ion-icon>
     </ion-buttons>
   </ion-toolbar>

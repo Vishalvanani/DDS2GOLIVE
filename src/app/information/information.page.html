@@ -287,7 +287,7 @@
       </ion-item>
       <div class="ion-padding" slot="content">
         <div *ngFor="let item of DriverHistory['citation']">
-          <ion-card *ngIf='item["rsp_mvr_cita_legl_descField"] != " " '>
+          <ion-card *ngIf='item["rsp_mvr_cita_legl_descField"] '>
             <ion-card-content>
               <p>Description : {{item['rsp_mvr_cita_legl_descField']}}</p>
               <p>Violation Date : {{item['rsp_mvr_cita_dtField']}}</p>
@@ -302,7 +302,7 @@
             </ion-card-content>
           </ion-card>
         </div>
-        <p *ngIf="DriverHistory && DriverHistory['citation'].length == 0 ">
+        <p *ngIf="DriverHistory && DriverHistory['citation'].length == 0">
           No citation information was found
         </p>
       </div>

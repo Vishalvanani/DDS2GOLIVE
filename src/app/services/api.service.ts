@@ -98,8 +98,8 @@ export class ApiService {
     this.closeSession(obj).then(
       () => {
         this.shared.HideLoading();
-        //localStorage.clear();
-        this.router.navigate(['/home']);
+        localStorage.removeItem('user');
+        this.router.navigate(['/login']);
       },
       () => {
         this.shared.HideLoading();
