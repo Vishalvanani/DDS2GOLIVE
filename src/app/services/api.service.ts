@@ -98,7 +98,7 @@ export class ApiService {
     this.closeSession(obj).then(
       () => {
         this.shared.HideLoading();
-        localStorage.removeItem('user');
+        // localStorage.removeItem('user');
         this.router.navigate(['/login']);
       },
       () => {
