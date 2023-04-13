@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { ApiService } from '../../services/api.service';
 
@@ -10,13 +10,20 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./more.page.scss'],
 })
 export class MorePage implements OnInit {
-  isUserExists: string;
+  isFromLogin: boolean;
 
   
-  constructor(private shared:SharedService,private router:Router,public auth: ApiService) { }
+  constructor(
+    private shared:SharedService,
+    private router:Router,
+    public auth: ApiService,
+    private _Activatedroute:ActivatedRoute
+    ) { 
+   
+  }
 
   ngOnInit() {
-    this.isUserExists = localStorage.getItem('user') ? localStorage.getItem('user') : '';
+    this.isFromLogin = this._Activatedroute.snapshot.paramMap.get('isFrom') == 'login' ? true : false; 
   }
 
   openinAppBrowser(url){
