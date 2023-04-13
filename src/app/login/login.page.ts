@@ -183,11 +183,11 @@ export class LoginPage implements OnInit {
             localStorage.setItem('user', this.encrypt(JSON.stringify(obj)));
             let saveIDValue = this.loginForm.get('saveId')?.value;
 
-            // if (saveIDValue == true) {
-            //   localStorage.setItem('saveid', 'true');
-            // } else if (!saveIDValue) {
-            //   localStorage.removeItem('saveid');
-            // }
+            if (saveIDValue == true) {
+              localStorage.setItem('saveid', 'true');
+            } else if (!saveIDValue) {
+              localStorage.removeItem('saveid');
+            }
 
             if (this.touchIdValue) {
               localStorage.setItem('fingerPrint', 'true');
