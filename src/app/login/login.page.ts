@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
-import { IonModal } from '@ionic/angular';
+import { IonModal, Platform } from '@ionic/angular';
 import { NativeBiometric } from 'capacitor-native-biometric';
 import { AES, enc } from 'crypto-js';
+import { App, AppState } from '@capacitor/app';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -44,10 +45,12 @@ export class LoginPage implements OnInit {
       url: "https://dds.georgia.gov/georgia-licenseid"
     },
   ];
+  resumeCalledCount: number = 0;
   constructor(
     public formBuilder: FormBuilder,
     private Apiauth: ApiService,
     private shared: SharedService,
+    private platform: Platform,
     private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
@@ -66,7 +69,7 @@ export class LoginPage implements OnInit {
     });
     this.makeBiometricLogin();
   }
-  
+
   // good@gmail.com - Password@1
 
   ionViewDidEnter(){ 
@@ -84,8 +87,24 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.platform.ready().then(() => {
+      App.addListener('appStateChange', (state: AppState) => {
+        if (state.isActive) {
+          this.resumeCalledCount++;
+          if(this.resumeCalledCount > 1){
+            this.resumeCalledCount = 0;
+            this.makeBiometricLogin();
+          }
+        } else {
+          console.log('App has become inactive');
+        }
+      });
+    })
   }
+
+  ngOnDestroy() {
+    App.removeAllListeners();
+}
 
   openinAppBrowser(url){
     this.shared.openInappbrowser(url)
@@ -281,6 +300,7 @@ export class LoginPage implements OnInit {
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
+    App.removeAllListeners();
   }
 
   modalwilldiscmiss() {
