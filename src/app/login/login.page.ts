@@ -5,7 +5,7 @@ import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { NativeBiometric } from 'capacitor-native-biometric';
-import { AES, enc, mode, pad } from 'crypto-js';
+import { AES, enc } from 'crypto-js';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
   securityCode: any = '';
   isModalOpen: boolean = false;
-  isfingerprintModalOpen: boolean = false;
+  isFingerprintModalOpen: boolean = false;
   touchIdValue: boolean = false;
   isValidFingerPrint: boolean = false;
 
@@ -63,21 +63,28 @@ export class LoginPage implements OnInit {
       ],
       userPassword: ['', [Validators.required, Validators.minLength(1)]],
       saveId: [],
-      //biometric: [],
     });
     this.makeBiometricLogin();
   }
-
+  
   // good@gmail.com - Password@1
 
-  ngOnInit() {
-    if (localStorage.getItem('saveid')) {
+  ionViewDidEnter(){ 
+    let saveId = localStorage.getItem('saveid')
+    this.loginForm?.get('userEmail')?.reset();
+    this.loginForm?.get('userPassword')?.reset()
+    if (saveId) {
       this.loginForm?.get('saveId')?.setValue(true);
       let user: any = localStorage.getItem('user');
       let dec = this.decrypt(user);
       let userId = JSON.parse(dec);
       this.loginForm?.get('userEmail')?.setValue(userId.UserID);
+    } else {
     }
+  }
+
+  ngOnInit() {
+    
   }
 
   openinAppBrowser(url){
@@ -118,13 +125,11 @@ export class LoginPage implements OnInit {
         serviceType: 'gettoken',
       };
 
-      //this.shared.showLoading();
       this.Apiauth.doHttp(request).subscribe(
         (resp: any) => {
           this.shared.GBAPI_TOKEN = resp.token;
 
           return resolve(resp.token);
-          // localStorage.setItem("token",resp.token)
         },
         () => {
           return reject('error');
@@ -183,11 +188,11 @@ export class LoginPage implements OnInit {
             localStorage.setItem('user', this.encrypt(JSON.stringify(obj)));
             let saveIDValue = this.loginForm.get('saveId')?.value;
 
-            // if (saveIDValue == true) {
-            //   localStorage.setItem('saveid', 'true');
-            // } else if (!saveIDValue) {
-            //   localStorage.removeItem('saveid');
-            // }
+            if (saveIDValue) {
+              localStorage.setItem('saveid', 'true');
+            } else {
+              localStorage.removeItem('saveid');
+            }
 
             if (this.touchIdValue) {
               localStorage.setItem('fingerPrint', 'true');
@@ -284,7 +289,7 @@ export class LoginPage implements OnInit {
   }
 
   fingerPrintModalDismiss() {
-    this.isfingerprintModalOpen = false;
+    this.isFingerprintModalOpen = false;
   }
 
   closeModal() {
@@ -359,7 +364,7 @@ export class LoginPage implements OnInit {
       let isTermsAccepted = localStorage.getItem('bioterms');
 
       if (!isTermsAccepted || isTermsAccepted == 'false') {
-        this.isfingerprintModalOpen = true;
+        this.isFingerprintModalOpen = true;
       } else {
         this.makeBiometricLogin();
       }
@@ -373,7 +378,7 @@ export class LoginPage implements OnInit {
   }
 
   closeFingerprintModal() {
-    this.isfingerprintModalOpen = false;
+    this.isFingerprintModalOpen = false;
   }
 
   acceptTerms() {
