@@ -302,7 +302,7 @@
             </ion-card-content>
           </ion-card>
         </div>
-        <p *ngIf="DriverHistory && DriverHistory['citation'].length == 0">
+        <p *ngIf="DriverHistory && DriverHistory['citation'].length == 0" style="text-align: center;">
           No citation information was found
         </p>
       </div>
@@ -331,49 +331,10 @@
             </ion-card-content>
           </ion-card>
         </div>
-        <p *ngIf="DriverHistory && DriverHistory['withdrawls'].length == 0 ">
+        <p *ngIf="DriverHistory && DriverHistory['withdrawls'].length == 0" style="text-align: center;">
           No withdrawl information was found
         </p>
       </div>
     </ion-accordion>
-  </ion-accordion-group> 
-
-  <!-- <div align="center">
-    <ion-button (click)="wantMore()">Want More?</ion-button>
-  </div> -->
-  <!-- <ion-accordion-group *ngIf="INFO">
-    <ion-accordion value="first">
-      <ion-item slot="header" color="light">
-        <ion-label>Driver Information</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <p>First Name : {{INFO.driverInfo.first_name}}</p>
-        <p>Last Name : {{INFO.driverInfo.last_name}}</p>
-        <p>DOB : {{INFO.driverInfo.dob}}</p>
-      </div>
-    </ion-accordion>
-    <ion-accordion value="second">
-      <ion-item slot="header" color="light">
-        <ion-label>Address Information</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <p>Address Type : {{INFO.addressInfo.addr_type}}</p>
-        <p>City : {{INFO.addressInfo.city}}</p>
-        <p>State : {{INFO.addressInfo.state}}</p>
-        <p>Zip Code : {{INFO.addressInfo.zipcode}}</p>
-      </div>
-    </ion-accordion>
-    <ion-accordion value="third">
-      <ion-item slot="header" color="light">
-        <ion-label>License Information</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <p>License Number : {{INFO.licenseInfo.lic_number}}</p>
-        <p>License Type : {{INFO.licenseInfo.lic_type}}</p>
-        <p>License State : {{INFO.licenseInfo.lic_state}}</p>
-        <p>License Status : {{INFO.licenseInfo.lic_status}}</p>
-        <p>License Expiry : {{INFO.licenseInfo.lic_expiry}}</p>
-      </div>
-    </ion-accordion>
-  </ion-accordion-group> -->
+  </ion-accordion-group>
 </ion-content>
