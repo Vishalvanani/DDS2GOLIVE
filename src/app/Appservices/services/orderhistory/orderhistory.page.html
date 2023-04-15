@@ -36,10 +36,28 @@
               slot="content"
               *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstLicenseInfo']"
             >
-              <p>License Class : {{doc.m_LicIDClassCD}}</p>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6" class="col1">License Class:</ion-col>
+                <ion-col size="6" class="col2">{{doc.m_LicIDClassCD}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6" class="col1">Issued:</ion-col>
+                <ion-col size="6" class="col2">{{doc.m_LicIDIssueDT}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6" class="col1">Expires:</ion-col>
+                <ion-col size="6" class="col2">{{doc.m_LicIDExpDT}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6" class="col1">Surrendered:</ion-col>
+                <ion-col size="6" class="col2">{{doc.m_LicenseSurrenderDT}}</ion-col>
+              </ion-row>
+            </ion-grid>
+              <!-- <p>License Class : {{doc.m_LicIDClassCD}}</p>
               <p>Issued : {{doc.m_LicIDIssueDT}}</p>
               <p>Expires : {{doc.m_LicIDExpDT}}</p>
-              <p>Surrendered : {{doc.m_LicenseSurrenderDT}}</p>
+              <p>Surrendered : {{doc.m_LicenseSurrenderDT}}</p> -->
             </div>
           </ion-accordion>
 
@@ -184,16 +202,51 @@
     </ng-template>
   </ion-modal>
 
-  <h4 class="font-13" *ngIf="orders['previousMVRData']?.length>0">
+  <!-- <h4 class="font-13" *ngIf="orders['previousMVRData']?.length>0">
     <b>MOTOR VEHICLE REPORT</b>
-  </h4>
+  </h4> -->
   <ion-card
     *ngFor="let item of orders['previousMVRData']; let i = index"
     style="margin-inline: 0px !important"
     class="black-color"
   >
-    <ion-card-content>
-      <p><b>Service Ordered :</b> Motor Vehicle Report</p>
+    <ion-card-header color="primary" *ngIf="i == 0">
+      <ion-card-title class="cardTitle">MOTOR VEHICLE REPORT</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="cardContent">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" class="col1">Service Ordered :</ion-col>
+          <ion-col size="6" class="col2">Motor Vehicle Report</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Term :</ion-col>
+          <ion-col size="6" class="col2"
+            >{{item['_objMVROrderInfo']._Term}}</ion-col
+          >
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Confirmation No :</ion-col>
+          <ion-col size="6" class="col2"
+            >{{item['_objMVROrderInfo']._TransactionID}}</ion-col
+          >
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Status :</ion-col>
+          <ion-col size="6" class="col2">
+            <a href="javascript:void(0);" (click)="viewReport(item,i)"
+              >View Report</a
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="col1">Order Date :</ion-col>
+          <ion-col size="6" class="col2"
+            >{{item['_objMVROrderInfo']._ServiceDT}}</ion-col
+          >
+        </ion-row>
+      </ion-grid>
+      <!-- <p><b>Service Ordered :</b> Motor Vehicle Report</p>
       <p><b>Term :</b>&nbsp;{{item['_objMVROrderInfo']._Term}}</p>
       <p>
         <b>Confirmation No :</b>
@@ -205,7 +258,7 @@
           >View Report</a
         >
       </p>
-      <p><b>Order Date :</b>&nbsp; {{item['_objMVROrderInfo']._ServiceDT}}</p>
+      <p><b>Order Date :</b>&nbsp; {{item['_objMVROrderInfo']._ServiceDT}}</p> -->
     </ion-card-content>
   </ion-card>
   <br />

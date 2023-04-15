@@ -436,7 +436,7 @@ export class LoginPage implements OnInit {
           }
         })
         .catch(() => {
-          alert('Invalid Authentication');
+          // alert('Invalid Authentication');
           // localStorage.setItem('fingerPrint','false')
           this.isValidFingerPrint = false;
           //return;

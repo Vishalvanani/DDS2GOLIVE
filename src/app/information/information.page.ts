@@ -31,8 +31,17 @@ export class InformationPage implements OnInit {
     this.DriverHistory = shared.GBDRIVERHISTORY;
     this.LicenseRealId = shared.GBLicenseRealID;
     this.isLicenseCode();
-    console.log(this.INFO);
-    console.log(this.DriverHistory);
+
+    // For citation
+    this.DriverHistory['citation'] = this.DriverHistory['citation'].filter(ele => {
+      return ele.rsp_mvr_cita_legl_descField.trim();
+    })
+
+    // For withdrawls
+    this.DriverHistory['withdrawls'] = this.DriverHistory['withdrawls'].filter(ele => {
+      return ele.rsp_mvr_susp_descField.trim();
+    })
+
   }
 
   ngOnInit() {}
