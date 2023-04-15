@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>More</ion-title>
-    <ion-buttons slot="end" (click)="auth.logoutApp()" *ngIf="isUserExists">
+    <ion-buttons slot="end" (click)="auth.logoutApp()" *ngIf="!isFromLogin">
       <ion-icon name="log-out-outline" class="font-25"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
@@ -34,10 +34,10 @@
     <ion-item (click)="openinAppBrowser('https://dds.georgia.gov/georgia-licenseid/general-license-topics/real-id')" detail="true">
       <ion-label>What Do I Need To Bring?</ion-label>
     </ion-item>
-    <ion-item (click)="manageBiomatric()" detail="true">
+    <ion-item (click)="manageBiomatric()" detail="true" *ngIf="!isFromLogin">
       <ion-label>Manage Biomertic</ion-label>
     </ion-item>
-    <ion-item (click)="appInfo()" detail="true">
+    <ion-item (click)="appInfo()" detail="true" *ngIf="!isFromLogin">
       <ion-label>About App</ion-label>
     </ion-item>
   </ion-list>

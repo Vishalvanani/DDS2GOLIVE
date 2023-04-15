@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { Geolocation, Position } from '@capacitor/geolocation';
-import { ModalController } from '@ionic/angular';
 import { environment } from '../../../src/environments/environment';
 import cscfile from '../../assets/csclist.json';
 import locationfile from '../../assets/locationlist.json';
 import { ApiService } from '../services/api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,8 +22,13 @@ export class LocationPage implements AfterViewInit, OnInit{
  public markers = [];
  public locationlist = [];
  MapSegment='MapView';
-constructor(private modalCtrl: ModalController,public auth: ApiService) {}
+ isFromLogin: boolean;
+constructor(
+  public auth: ApiService,
+  private _Activatedroute:ActivatedRoute
+  ) {}
  ngOnInit(): void {
+  this.isFromLogin = this._Activatedroute.snapshot.paramMap.get('isFrom') == 'login' ? true : false; 
   console.log('into oninit maplistview value='+this.maplistview);
   this.data=cscfile;
   this.markers = [];

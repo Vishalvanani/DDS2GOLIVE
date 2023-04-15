@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-buttons slot="end" (click)="auth.logoutApp()">
+      <ion-buttons slot="end" (click)="auth.logoutApp()" *ngIf="!isFromLogin">
         <ion-icon name="log-out-outline" class="font-25"></ion-icon>
       </ion-buttons>
       <ion-segment [(ngModel)]="MapSegment" (ionChange)="mapViewChangeAction($event)" value="MapView">

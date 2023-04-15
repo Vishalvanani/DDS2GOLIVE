@@ -143,11 +143,11 @@ export class LoginPage implements OnInit {
   }
   
   more() {
-    this.router.navigate(['more']);
+    this.router.navigate(['more', { isFrom: 'login'}]);
   }
 
   location() {
-    this.router.navigate(['location']);
+    this.router.navigate(['location', { isFrom: 'login'}]);
   }
 
   async clickSubmit() {
