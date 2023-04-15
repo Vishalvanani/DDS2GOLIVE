@@ -11,7 +11,7 @@
   <ion-card class="biometricCard">
     <ion-item lines="none">
       <ion-label>Touch ID Login</ion-label>
-      <ion-toggle slot="end" mode="ios"></ion-toggle>
+      <ion-toggle slot="end" mode="ios" [checked]="isBioTermsEnabled" (ionChange)="changeToggle()"></ion-toggle>
     </ion-item>
   </ion-card>
 </ion-content>

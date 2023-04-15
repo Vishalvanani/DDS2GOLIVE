@@ -5,7 +5,7 @@ import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { NativeBiometric } from 'capacitor-native-biometric';
-import { AES, enc, mode, pad } from 'crypto-js';
+import { AES, enc } from 'crypto-js';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
   securityCode: any = '';
   isModalOpen: boolean = false;
-  isfingerprintModalOpen: boolean = false;
+  isFingerprintModalOpen: boolean = false;
   touchIdValue: boolean = false;
   isValidFingerPrint: boolean = false;
 
@@ -63,21 +63,28 @@ export class LoginPage implements OnInit {
       ],
       userPassword: ['', [Validators.required, Validators.minLength(1)]],
       saveId: [],
-      //biometric: [],
     });
     this.makeBiometricLogin();
   }
-
+  
   // good@gmail.com - Password@1
 
-  ngOnInit() {
-    if (localStorage.getItem('saveid')) {
+  ionViewDidEnter(){ 
+    let saveId = localStorage.getItem('saveid')
+    this.loginForm?.get('userEmail')?.reset();
+    this.loginForm?.get('userPassword')?.reset()
+    if (saveId) {
       this.loginForm?.get('saveId')?.setValue(true);
       let user: any = localStorage.getItem('user');
       let dec = this.decrypt(user);
       let userId = JSON.parse(dec);
       this.loginForm?.get('userEmail')?.setValue(userId.UserID);
+    } else {
     }
+  }
+
+  ngOnInit() {
+    
   }
 
   openinAppBrowser(url){
@@ -118,13 +125,11 @@ export class LoginPage implements OnInit {
         serviceType: 'gettoken',
       };
 
-      //this.shared.showLoading();
       this.Apiauth.doHttp(request).subscribe(
         (resp: any) => {
           this.shared.GBAPI_TOKEN = resp.token;
 
           return resolve(resp.token);
-          // localStorage.setItem("token",resp.token)
         },
         () => {
           return reject('error');
@@ -183,9 +188,9 @@ export class LoginPage implements OnInit {
             localStorage.setItem('user', this.encrypt(JSON.stringify(obj)));
             let saveIDValue = this.loginForm.get('saveId')?.value;
 
-            if (saveIDValue == true) {
+            if (saveIDValue) {
               localStorage.setItem('saveid', 'true');
-            } else if (!saveIDValue) {
+            } else {
               localStorage.removeItem('saveid');
             }
 
@@ -251,7 +256,6 @@ export class LoginPage implements OnInit {
         respDriver.rsp_curr_docm_arrayField[0]['rsp_lic_expr_dtField'],
     };
     ARR.licenseEndors = respDriver['rsp_curr_docm_arrayField'][0];
-    //console.log(ARR)
     History_Arr.citation = respDriver['rsp_mvr_cita_arrayField'];
     History_Arr.withdrawls = respDriver['rsp_mvr_susp_arrayField'];
 
@@ -284,12 +288,11 @@ export class LoginPage implements OnInit {
   }
 
   fingerPrintModalDismiss() {
-    this.isfingerprintModalOpen = false;
+    this.isFingerprintModalOpen = false;
   }
 
   closeModal() {
     this.modal.dismiss();
-    //this.router.navigate(['/login']);
   }
 
   validateSecurityCode() {
@@ -309,7 +312,6 @@ export class LoginPage implements OnInit {
     this.shared.showLoading();
     this.Apiauth.doHttp(request).subscribe(
       async (resp: any) => {
-        //console.log(resp)
         this.shared.HideLoading();
 
         let respObj = resp.twoFactorAuthResponse;
@@ -332,26 +334,6 @@ export class LoginPage implements OnInit {
     console.log(e.detail.checked);
   }
 
-  // async touchIdChange(e) {
-  //   console.log(e);
-  //   if (e.detail.checked) {
-  //     const result = await NativeBiometric.isAvailable();
-  //     console.log(JSON.stringify(result));
-  //     console.log(result);
-  //     if (result.isAvailable) {
-  //       this.touchIdValue = true;
-  //       //localStorage.setItem('fingerPrint', 'true');
-  //       //this.performBiometricVerificatin()
-  //     } else {
-  //       this.touchIdValue = false;
-  //       localStorage.setItem('fingerPrint', 'false');
-  //       alert(
-  //         "Please register your fingerprints or face ID through your mobile device's settings before using this feature"
-  //       );
-  //     }
-  //   }
-  // }
-
   async fingerPrintLogin() {
     const result = await NativeBiometric.isAvailable();
 
@@ -359,7 +341,7 @@ export class LoginPage implements OnInit {
       let isTermsAccepted = localStorage.getItem('bioterms');
 
       if (!isTermsAccepted || isTermsAccepted == 'false') {
-        this.isfingerprintModalOpen = true;
+        this.isFingerprintModalOpen = true;
       } else {
         this.makeBiometricLogin();
       }
@@ -373,7 +355,7 @@ export class LoginPage implements OnInit {
   }
 
   closeFingerprintModal() {
-    this.isfingerprintModalOpen = false;
+    this.isFingerprintModalOpen = false;
   }
 
   acceptTerms() {
@@ -394,11 +376,6 @@ export class LoginPage implements OnInit {
       ? localStorage.getItem('fingerPrint')
       : '';
 
-    /*  if (isFingerPrintSetupSuccess == 'true') {
-      this.touchIdValue = true;
-      //this.loginForm.get('biometric')?.setValue(true);
-    } */
-
     let isUserExists: any = localStorage.getItem('user')
       ? localStorage.getItem('user')
       : '';
@@ -410,11 +387,6 @@ export class LoginPage implements OnInit {
   async performBiometricVerificatin() {
     const result = await NativeBiometric.isAvailable();
 
-    console.log(result);
-    //if (!result.isAvailable) return;
-
-    //const isFaceID = result.biometryType == BiometryType.FACE_ID;
-
     if (result.isAvailable) {
       await NativeBiometric.verifyIdentity({
         reason: 'For easy log in',
@@ -423,23 +395,17 @@ export class LoginPage implements OnInit {
       })
 
         .then(() => {
-          // alert("Authentication Successfull.")
           this.isValidFingerPrint = true;
 
           let isUserExists: any = localStorage.getItem('user')
             ? localStorage.getItem('user')
             : '';
-          //alert(isUserExists)
           if (isUserExists) {
-            //alert("AUTO LOGIN")
             this.autoLogin();
           }
         })
         .catch(() => {
-          // alert('Invalid Authentication');
-          // localStorage.setItem('fingerPrint','false')
           this.isValidFingerPrint = false;
-          //return;
         });
     } else {
       this.touchIdValue = false;
