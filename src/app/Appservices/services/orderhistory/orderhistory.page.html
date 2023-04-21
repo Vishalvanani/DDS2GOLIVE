@@ -17,7 +17,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button (click)="cancel()">Cancel</ion-button>
+            <ion-button (click)="cancel()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
           </ion-buttons>
           <ion-title>Driving History(MVR)</ion-title>
         </ion-toolbar>
@@ -31,133 +31,137 @@
             <ion-item slot="header" color="light">
               <ion-label>Document Issued</ion-label>
             </ion-item>
-            <div
-              class="ion-padding"
-              slot="content"
-              *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstLicenseInfo']"
-            >
-            <ion-grid>
-              <ion-row>
-                <ion-col size="6" class="col1">License Class:</ion-col>
-                <ion-col size="6" class="col2">{{doc.m_LicIDClassCD}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6" class="col1">Issued:</ion-col>
-                <ion-col size="6" class="col2">{{doc.m_LicIDIssueDT}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6" class="col1">Expires:</ion-col>
-                <ion-col size="6" class="col2">{{doc.m_LicIDExpDT}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6" class="col1">Surrendered:</ion-col>
-                <ion-col size="6" class="col2">{{doc.m_LicenseSurrenderDT}}</ion-col>
-              </ion-row>
-            </ion-grid>
-              <!-- <p>License Class : {{doc.m_LicIDClassCD}}</p>
-              <p>Issued : {{doc.m_LicIDIssueDT}}</p>
-              <p>Expires : {{doc.m_LicIDExpDT}}</p>
-              <p>Surrendered : {{doc.m_LicenseSurrenderDT}}</p> -->
-            </div>
+
+            <ion-card style="margin-bottom: 10px;" *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstLicenseInfo']" slot="content">
+              <ion-card-content class="cardContent">
+                <ion-row>
+                  <ion-col size="6" class="col1">License Class:</ion-col>
+                  <ion-col size="6" class="col2">{{doc.m_LicIDClassCD}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Issued:</ion-col>
+                  <ion-col size="6" class="col2">{{doc.m_LicIDIssueDT}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Expires:</ion-col>
+                  <ion-col size="6" class="col2">{{doc.m_LicIDExpDT}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Surrendered:</ion-col>
+                  <ion-col size="6" class="col2">{{doc.m_LicenseSurrenderDT}}</ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
           </ion-accordion>
 
           <ion-accordion value="orderinfo">
             <ion-item slot="header" color="light">
               <ion-label>Order Information</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">
-              <p>
-                Non-commercila Privilige :
-                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._NonCommercialPrivilidges}}
-              </p>
-              <p>
-                Commercial Privilige :
-                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._CommercialPrivilidges}}
-              </p>
-              <p>
-                Limited Permit :
-                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._LimitedPermit}}
-              </p>
-              <p>
-                Current Points :
-                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._TotalPoints}}
-              </p>
-              <p>
-                Order Date:
-                {{orders['previousMVRData'][selectedInd]['_objDriverInfo']._OriginalIssueDT}}
-              </p>
-            </div>
+
+            <ion-card style="margin-bottom: 10px;" slot="content">
+              <ion-card-content class="cardContent">
+                <ion-row>
+                  <ion-col size="6" class="col1">Non-commercial Privilige:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_objDriverInfo']._NonCommercialPrivilidges}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Commercial Privilige:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_objDriverInfo']._CommercialPrivilidges}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Limited Permit:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_objDriverInfo']._LimitedPermit}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Current Points:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_objDriverInfo']._TotalPoints}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Order Date:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_objDriverInfo']._OriginalIssueDT}}</ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
           </ion-accordion>
 
           <ion-accordion value="commercial">
             <ion-item slot="header" color="light">
               <ion-label>Commercial Information</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content" 
-            *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState ||
-                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr">
-              <p *nfIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode">
-                DriverCertification:{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode">
-                SelfCertification:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived"> 
-                SelfCertFormReceived:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode">
-                Type:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode">
-                MedCertReceived:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate">
-                MedCertExpires:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate}}
-              </p>
-              <p>MedRestrictions: ''</p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode">
-                MedicalVariances:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate">
-                MedVarExpires:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName">
-                MedExaminerName:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr">
-                MedExaminerPhoneNumber:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr">
-                MedLicenseNum:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState">
-                MedExaminerState:{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState}}
-              </p>
-              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr">
-                MedExaminerRegNumber:
-                {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr}}
-              </p>
-            </div>
+
+            <ion-card style="margin-bottom: 10px;" slot="content" *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState ||
+            orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr">
+        <p *nfIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode">
+              <ion-card-content class="cardContent">
+                <ion-row *nfIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode">
+                  <ion-col size="6" class="col1">DriverCertification:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode">
+                  <ion-col size="6" class="col1">SelfCertification:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived">
+                  <ion-col size="6" class="col1">SelfCertFormReceived:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode">
+                  <ion-col size="6" class="col1">Type:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode">
+                  <ion-col size="6" class="col1">MedCertReceived:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate">
+                  <ion-col size="6" class="col1">MedCertExpires:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate">
+                  <ion-col size="6" class="col1">MedRestrictions:</ion-col>
+                  <ion-col size="6" class="col2"></ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode">
+                  <ion-col size="6" class="col1">MedicalVariances:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate">
+                  <ion-col size="6" class="col1">MedVarExpires:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName">
+                  <ion-col size="6" class="col1">MedExaminerName:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr">
+                  <ion-col size="6" class="col1">MedExaminerPhoneNumber:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr">
+                  <ion-col size="6" class="col1">MedLicenseNum:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState">
+                  <ion-col size="6" class="col1">MedExaminerState:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr">
+                  <ion-col size="6" class="col1">MedExaminerRegNumber:</ion-col>
+                  <ion-col size="6" class="col2">{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr}}</ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
 
             <div class="ion-padding" slot="content">
               <div
@@ -183,49 +187,114 @@
             <ion-item slot="header" color="light">
               <ion-label>Citation(s)</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">
-              <div
-                *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstCitationInfo']"
-              >
-                <p>Description : {{doc._CitaDesc}}</p>
-                <p>Violaton Date : {{doc._ViolDt}}</p>
-                <p>Accident Involved : {{doc._Accident}}</p>
-                <p>Commercial Offence : {{doc._CommercialOffense}}</p>
-                <p>Hazardous Material: {{doc._HazardousMaterial}}</p>
-                <p>Disposition Date : {{doc._DispositionDT}}</p>
-                <p>Disposition : {{doc._DispDesc}}</p>
-                <p>Points : {{doc._Point}}</p>
-                <p>Jurisdiction : {{doc._Jurisdiction}}</p>
-                <p>Court : {{doc._CitationCourtDesc}}</p>
-              </div>
 
-              <div
-                *ngIf="orders['previousMVRData'][selectedInd]['_lstCitationInfo'].length ==0"
-              >
-                <p>There is no citation data available.</p>
-              </div>
+            <div slot="content">
+            <ion-card style="margin-bottom: 10px;" *ngFor="let doc of orders['previousMVRData'][selectedInd][' ']">
+              <ion-card-content class="cardContent">
+                <ion-row>
+                  <ion-col size="6" class="col1">Description:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._CitaDesc}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Violaton Date:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._ViolDt}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Accident Involved:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._Accident}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Commercial Offence:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._CommercialOffense}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Hazardous Material:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._HazardousMaterial}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Disposition Date:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._DispositionDT}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Disposition:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._DispDesc}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Points:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._Point}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Jurisdiction:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._Jurisdiction}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="col1">Court:</ion-col>
+                  <ion-col size="6" class="col2">{{doc._CitationCourtDesc}}</ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+
+            <div *ngIf="orders['previousMVRData'][selectedInd]['_lstCitationInfo'].length ==0">
+              <p class="txt-center">There is no citation data available.</p>
             </div>
+          </div>
+ 
           </ion-accordion>
 
           <ion-accordion value="withdrawl">
             <ion-item slot="header" color="light">
               <ion-label>Withdrawl(s)</ion-label>
             </ion-item>
-            <div
-              class="ion-padding"
-              slot="content"
-              *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstSuspensionInfo']"
-            >
-              <p>Description : {{doc._SuspDescription}}</p>
-              <p>Withdrawal Type : {{doc._WithdrawalTyp}}</p>
-              <p>Withdrawal Extent : {{doc._WithdrawalExtent}}</p>
-              <p>Jurisdiction : {{doc._Jurisdiction}}</p>
-              <p>Served Type : {{doc._ServedTyp}}</p>
-              <p>Served Date : {{doc._ServedDt}}</p>
-              <p>Violation Date : {{doc._ViolationDt}}</p>
-              <p>Effective Date : {{doc._SuspDt}}</p>
-              <p>Withdrawl Expiry Date : {{doc._SuspExpirationDT}}</p>
-              <p>Reinstatement Date : {{doc._ReinstatementDt}}</p>
+
+            <div slot="content">
+              <ion-card style="margin-bottom: 10px;" *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstSuspensionInfo']">
+                <ion-card-content class="cardContent">
+                  <ion-row>
+                    <ion-col size="6" class="col1">Description:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._SuspDescription}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Withdrawal Type:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._WithdrawalTyp}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Withdrawal Extent:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._WithdrawalExtent}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Jurisdiction:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._Jurisdiction}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Served Type:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._ServedTyp}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Served Date:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._ServedDt}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Violation Date:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._ViolationDt}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Effective Date:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._SuspDt}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Withdrawl Expiry Date:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._SuspExpirationDT}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Reinstatement Date:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._ReinstatementDt}}</ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+  
+              <div *ngIf="orders['previousMVRData'][selectedInd]['_lstSuspensionInfo'].length ==0">
+                <p class="txt-center">There is no withdrawl data available.</p>
+              </div>
             </div>
           </ion-accordion>
         </ion-accordion-group>
@@ -233,17 +302,13 @@
     </ng-template>
   </ion-modal>
 
-  <!-- <h4 class="font-13" *ngIf="orders['previousMVRData']?.length>0">
-    <b>MOTOR VEHICLE REPORT</b>
-  </h4> -->
+  <div *ngIf="orders['previousMVRData']?.length>0" class="titleMsg">MOTOR VEHICLE REPORT</div>
+
   <ion-card
     *ngFor="let item of orders['previousMVRData']; let i = index"
     style="margin-inline: 0px !important"
     class="black-color"
   >
-    <ion-card-header color="primary" *ngIf="i == 0">
-      <ion-card-title class="cardTitle">MOTOR VEHICLE REPORT</ion-card-title>
-    </ion-card-header>
     <ion-card-content class="cardContent">
       <ion-grid>
         <ion-row>
@@ -292,7 +357,6 @@
       <p><b>Order Date :</b>&nbsp; {{item['_objMVROrderInfo']._ServiceDT}}</p> -->
     </ion-card-content>
   </ion-card>
-  <br />
   <h4 class="font-13" *ngIf="orders['licenseOrderStatus']?.length>0">
     <b>ORDER STATUS</b>
   </h4>
@@ -307,7 +371,6 @@
       <p><b>Status Date :</b> {{item.m_StatusDate}}</p>
     </ion-card-content>
   </ion-card>
-  <br />
   <h4 class="font-13" *ngIf="orders['lstProcessedDocumentServices']?.length>0">
     ONLINE RECEIPTS
   </h4>
@@ -323,109 +386,63 @@
   </ion-card>
 
   <div *ngIf="isLoadFinish">
-    <div class="row">
-      <div class="col">
-        <h4 class="text-center font-13"><b>Order Status Explanation</b></h4>
-        <hr style="border: 1px solid #999" />
-      </div>
-    </div>
-    <div class="row vertialign">
-      <div class="col">
-        <table
-          width="100%"
-          style="border-collapse: unset; border-spacing: 11px; font-size: 13px"
-        >
-          <tr>
-            <td class="bluetext" style="width: 90px">Approved</td>
-            <td>Your order is being processed for mailing</td>
-          </tr>
-          <tr>
-            <td class="bluetext" id="orderstatus_mailorderstatus">Mailed</td>
-            <td>Your order has been mailed</td>
-          </tr>
-          <tr>
-            <td class="bluetext" id="orderstatus_pendorderstatus">Pending</td>
-            <td>
-              We appreciate your patiance; your order still being processed
-            </td>
-          </tr>
-          <tr>
-            <td class="bluetext" id="orderstatus_denieorderstatus">Denied</td>
-            <td>
-              Unfortunately, we were unable to process your order online, Please
-              visit a Customer Service Center
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
+    <div class="titleMsg">Order Status Explanation</div>
 
-    <div class="row">
-      <div class="col">
-        <h4 class="text-center font-13" id="orderstatus_oseorderstatus1">
-          <b>For Hire Order Status Explanation</b>
-        </h4>
-        <hr style="border: 1px solid #999" />
-      </div>
-    </div>
-    <div class="row vertialign">
-      <div class="col">
-        <table
-          width="100%"
-          style="border-collapse: unset; border-spacing: 11px; font-size: 13px"
-        >
-          <tr>
-            <td
-              class="bluetext"
-              style="width: 90px"
-              id="orderstatus_aprvorderstatus"
-            >
-              Pending Review
-            </td>
-            <td>
-              We appreciate your patience, your application is still pending
-              review.
-            </td>
-          </tr>
-          <tr>
-            <td class="bluetext" id="orderstatus_mailorderstatus">
-              Under Review
-            </td>
-            <td>
-              We appreciate your patience, your application is still under
-              review.
-            </td>
-          </tr>
-          <tr>
-            <td class="bluetext" id="orderstatus_pendorderstatus">Approved</td>
-            <td>
-              Your application has been approved. An approval letter has been
-              mailed to you.
-            </td>
-          </tr>
-          <tr>
-            <td class="bluetext" id="orderstatus_denieorderstatus">Rejected</td>
-            <td>
-              Your application has been rejected. A rejection letter has been
-              mailed to you. Please allow 5-7 days for postal delivery.
-            </td>
-          </tr>
-          <tr>
-            <td class="bluetext" id="orderstatus_denieorderstatus">Denied</td>
-            <td>
-              Your application has been denied. A denial letter has been mailed
-              to you. Please allow 5-7 days for postal delivery.
-            </td>
-          </tr>
-          <tr>
-            <td class="bluetext" id="orderstatus_denieorderstatus">Appeal</td>
-            <td>
-              Your application is currently under appeal. You will be notified
-              by mail when the appeal process is complete.
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
+    <ion-card style="margin: 10px 0px; margin-bottom: 15px;">
+      <ion-card-content class="cardContent">
+        <ion-row>
+          <ion-col size="3" class="col1">Approved:</ion-col>
+          <ion-col size="9" class="col2">Your order is being processed for mailing</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" class="col1">Mailed:</ion-col>
+          <ion-col size="9" class="col2">Your order has been mailed</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" class="col1">Pending:</ion-col>
+          <ion-col size="9" class="col2">We appreciate your patiance; your order still being processed</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" class="col1">Denied:</ion-col>
+          <ion-col size="9" class="col2">Unfortunately, we were unable to process your order online, Please
+            visit a Customer Service Center</ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <div class="titleMsg">For Hire Order Status Explanation</div>
+
+    <ion-card style="margin: 10px 0px; margin-bottom: 15px;">
+      <ion-card-content class="cardContent">
+        <ion-row>
+          <ion-col size="3" class="col1">Pending Review:</ion-col>
+          <ion-col size="9" class="col2">We appreciate your patience, your application is still pending review.</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" class="col1">Under Review:</ion-col>
+          <ion-col size="9" class="col2">We appreciate your patience, your application is still under review.</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" class="col1">Approved:</ion-col>
+          <ion-col size="9" class="col2">Your application has been approved. An approval letter has been
+            mailed to you.</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" class="col1">Rejected:</ion-col>
+          <ion-col size="9" class="col2">Your application has been rejected. A rejection letter has been
+            mailed to you. Please allow 5-7 days for postal delivery.</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" class="col1">Denied:</ion-col>
+          <ion-col size="9" class="col2"> Your application has been denied. A denial letter has been mailed
+            to you. Please allow 5-7 days for postal delivery.</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" class="col1">Appeal:</ion-col>
+          <ion-col size="9" class="col2">  Your application is currently under appeal. You will be notified
+            by mail when the appeal process is complete.</ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
   </div>
 </ion-content>
