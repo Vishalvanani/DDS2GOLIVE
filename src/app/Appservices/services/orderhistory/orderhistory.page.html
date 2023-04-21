@@ -93,58 +93,89 @@
             <ion-item slot="header" color="light">
               <ion-label>Commercial Information</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">
-              <p>
+            <div class="ion-padding" slot="content" 
+            *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState ||
+                  orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr">
+              <p *nfIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode">
                 DriverCertification:{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode">
                 SelfCertification:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived"> 
                 SelfCertFormReceived:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode">
                 Type:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode">
                 MedCertReceived:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate">
                 MedCertExpires:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate}}
               </p>
               <p>MedRestrictions: ''</p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode">
                 MedicalVariances:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate">
                 MedVarExpires:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName">
                 MedExaminerName:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr">
                 MedExaminerPhoneNumber:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr">
                 MedLicenseNum:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState">
                 MedExaminerState:{{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState}}
               </p>
-              <p>
+              <p *ngIf="orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr">
                 MedExaminerRegNumber:
                 {{orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr}}
               </p>
+            </div>
+
+            <div class="ion-padding" slot="content">
+              <div
+              *ngIf="!orders['previousMVRData'][selectedInd]['_CDLISMVRData']._DrvrCertStatusCode &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfCertCode &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._SelfFormReceived &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertStatusCode &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedCertExpDate &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarStatusCode &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedVarExpDate &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._MedExaminerName &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._PhoneNbr &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertNbr &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._CertState &&
+              !orders['previousMVRData'][selectedInd]['_CDLISMVRData']._RegistryNbr"
+              >
+                <p>There is no Commercial Information data available.</p>
+              </div>
             </div>
           </ion-accordion>
 

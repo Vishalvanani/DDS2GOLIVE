@@ -316,6 +316,7 @@ export class LoginPage implements OnInit {
 
         let respObj = resp.twoFactorAuthResponse;
         if (respObj.valid) {
+          this.securityCode = '';
           this.modal.dismiss();
           this.router.navigate(['/tabs/tabs/tab3']);
         } else {
