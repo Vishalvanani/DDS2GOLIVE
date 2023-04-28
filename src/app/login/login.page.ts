@@ -95,12 +95,10 @@ export class LoginPage implements OnInit {
       if (state.isActive) {
         this.resumeCalledCount++;
         if(this.resumeCalledCount > 1){
-          this.resumeCalledCount = 0;
           this.makeBiometricLogin();
         }
       } else {
         console.log('App has become inactive');
-        this.resumeCalledCount = 2;
       }
     });
   }
@@ -363,11 +361,10 @@ export class LoginPage implements OnInit {
 
   async fingerPrintLogin() {
     const result = await NativeBiometric.isAvailable();
-
     if (result.isAvailable) {
       let isTermsAccepted = localStorage.getItem('bioterms');
-
-      if (!isTermsAccepted || isTermsAccepted == 'false') {
+      let isUserLoggedIn = localStorage.getItem('user');
+      if (!isUserLoggedIn || (isUserLoggedIn && (!isTermsAccepted || isTermsAccepted == 'false'))) {
         this.isFingerprintModalOpen = true;
       } else {
         this.makeBiometricLogin();
@@ -399,6 +396,7 @@ export class LoginPage implements OnInit {
   }
 
   makeBiometricLogin() {
+    this.resumeCalledCount = 0;
     let isFingerPrintSetupSuccess = localStorage.getItem('fingerPrint')
       ? localStorage.getItem('fingerPrint')
       : '';
