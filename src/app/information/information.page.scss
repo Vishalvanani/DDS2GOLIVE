@@ -76,6 +76,18 @@ ion-card{
     }
     .feesPoint{
         font-size: 35px;
-        color: #000;
+        font-weight: bold;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .yellow {
+        color: #ffd534;
+    }
+
+    .red {
+        color: red;
     }
 }
