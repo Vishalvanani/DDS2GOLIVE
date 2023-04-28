@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { SharedService } from '../services/shared.service';
@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
     public formBuilder: FormBuilder,
     private Apiauth: ApiService,
     private shared: SharedService,
-    private platform: Platform,
+    private changeDetectorRef: ChangeDetectorRef,
     private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
@@ -87,24 +87,28 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    this.platform.ready().then(() => {
-      App.addListener('appStateChange', (state: AppState) => {
-        if (state.isActive) {
-          this.resumeCalledCount++;
-          if(this.resumeCalledCount > 1){
-            this.resumeCalledCount = 0;
-            this.makeBiometricLogin();
-          }
-        } else {
-          console.log('App has become inactive');
+
+  }
+  
+  ionViewWillEnter(){
+    App.addListener('appStateChange', (state: AppState) => {
+      if (state.isActive) {
+        this.resumeCalledCount++;
+        if(this.resumeCalledCount > 1){
+          this.resumeCalledCount = 0;
+          this.makeBiometricLogin();
         }
-      });
-    })
+      } else {
+        console.log('App has become inactive');
+        this.resumeCalledCount = 2;
+      }
+    });
   }
 
   ngOnDestroy() {
     App.removeAllListeners();
 }
+
 
   openinAppBrowser(url){
     this.shared.openInappbrowser(url)
@@ -301,6 +305,7 @@ export class LoginPage implements OnInit {
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
     App.removeAllListeners();
+    this.changeDetectorRef.detectChanges();
   }
 
   modalwilldiscmiss() {
@@ -312,6 +317,7 @@ export class LoginPage implements OnInit {
   }
 
   closeModal() {
+    this.securityCode = '';
     this.modal.dismiss();
   }
 
