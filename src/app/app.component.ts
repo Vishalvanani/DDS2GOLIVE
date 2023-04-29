@@ -34,6 +34,7 @@ export class AppComponent {
   restartIdleLogoutTimer() {
     clearTimeout(this.idleLogoutTimer);
     this.idleLogoutTimer = setTimeout(() => {
+      console.log("37");
       this.logoutUser();
     }, 60000);
   }
@@ -74,7 +75,7 @@ export class AppComponent {
   isUserExist(){
     let isUserExists: any = localStorage.getItem('user') ? localStorage.getItem('user') : '';
     if (isUserExists) {
-      // this.restartIdleLogoutTimer();
+      this.restartIdleLogoutTimer();
     }
 
   }
