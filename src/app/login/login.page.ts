@@ -74,6 +74,8 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter(){ 
     let saveId = localStorage.getItem('saveid')
+    let bioterms = localStorage.getItem('bioterms')
+    if(bioterms) this.touchIdValue = true;
     this.loginForm?.get('userEmail')?.reset();
     this.loginForm?.get('userPassword')?.reset()
     if (saveId) {
