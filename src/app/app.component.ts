@@ -34,39 +34,10 @@ export class AppComponent {
   restartIdleLogoutTimer() {
     clearTimeout(this.idleLogoutTimer);
     this.idleLogoutTimer = setTimeout(() => {
-      console.log("37");
-      this.logoutUser();
+      this.router.navigate(['login']);
     }, 60000);
   }
   
-  async logoutUser() {
-    // your logout logic here
-    let idealTimeoutAlert = await this.alertController.create({
-      header: 'Attention!',
-      message: 'Your session is expired',
-      backdropDismiss: false,
-      buttons: [
-        {
-          text: 'Login',
-          role: 'cancel',
-          handler: () => {
-            // Handle Logout Code
-            this.modalCtrl.dismiss();
-            this.router.navigate(['login']);
-          },
-        },
-        {
-          text: 'Exit',
-          handler: () => {
-            // Handle Exit Code
-            (navigator as any).app.exitApp();
-          },
-        },
-      ],
-    });
-    idealTimeoutAlert.present();
-  }
-
   @HostListener('touchstart')
   onTouchStart() {
     this.isUserExist();
