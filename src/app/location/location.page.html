@@ -1,12 +1,12 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
+        <ion-back-button color="light"></ion-back-button>
       </ion-buttons>
       <ion-buttons slot="end" (click)="auth.logoutApp()" *ngIf="!isFromLogin">
         <ion-icon name="log-out-outline" class="font-25"></ion-icon>
       </ion-buttons>
-      <ion-segment [(ngModel)]="MapSegment" (ionChange)="mapViewChangeAction($event)" value="MapView">
+      <ion-segment mode="md" [(ngModel)]="MapSegment" (ionChange)="mapViewChangeAction($event)" value="MapView">
         <ion-segment-button value="MapView"><ion-label style="color:white;">MapView</ion-label></ion-segment-button>
         <ion-segment-button value="ListView"><ion-label style="color:white;">ListView</ion-label></ion-segment-button>
       </ion-segment>
