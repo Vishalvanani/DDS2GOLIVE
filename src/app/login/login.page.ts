@@ -73,8 +73,8 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter(){ 
     let saveId = localStorage.getItem('saveid')
-    let isTermsConditionAccepted = localStorage.getItem('isTermsConditionAccepted')
-    if(isTermsConditionAccepted) { localStorage.setItem('isFingerprintEnabled', 'true'); }
+    // let isTermsConditionAccepted = localStorage.getItem('isTermsConditionAccepted')
+    // if(isTermsConditionAccepted) { localStorage.setItem('isFingerprintEnabled', 'true'); }
     this.loginForm?.get('userEmail')?.reset();
     this.loginForm?.get('userPassword')?.reset()
     if (saveId) {
@@ -371,7 +371,6 @@ export class LoginPage implements OnInit {
         this.makeBiometricLogin();
       }
     } else {
-      // this.touchIdValue = false;
       localStorage.setItem('isFingerprintEnabled', 'false');
       alert(
         "Please register your fingerprints or face ID through your mobile device's settings before using this feature"
