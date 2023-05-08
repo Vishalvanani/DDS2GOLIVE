@@ -18,7 +18,6 @@ export class LoginPage implements OnInit {
   securityCode: any = '';
   isModalOpen: boolean = false;
   isFingerprintModalOpen: boolean = false;
-  touchIdValue: boolean = false;
   isValidFingerPrint: boolean = false;
 
   secretKey = 'test123';
@@ -74,8 +73,8 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter(){ 
     let saveId = localStorage.getItem('saveid')
-    let bioterms = localStorage.getItem('bioterms')
-    if(bioterms) this.touchIdValue = true;
+    let isTermsConditionAccepted = localStorage.getItem('isTermsConditionAccepted')
+    if(isTermsConditionAccepted) { localStorage.setItem('isFingerprintEnabled', 'true'); }
     this.loginForm?.get('userEmail')?.reset();
     this.loginForm?.get('userPassword')?.reset()
     if (saveId) {
@@ -182,7 +181,7 @@ export class LoginPage implements OnInit {
       UserID: ionform.userEmail,
     };
 
-    console.log(this.loginForm.value);
+    
     this.submitForm(params);
   }
 
@@ -217,9 +216,9 @@ export class LoginPage implements OnInit {
               localStorage.removeItem('saveid');
             }
 
-            if (this.touchIdValue) {
-              localStorage.setItem('fingerPrint', 'true');
-            }
+            // if (this.touchIdValue) {
+            //   localStorage.setItem('isFingerprintEnabled', 'true');
+            // }
             await this.filterResp(resp);
             this.setOpen(true);
           } else {
@@ -232,7 +231,7 @@ export class LoginPage implements OnInit {
         }
       },
       (error) => {
-        console.log(error);
+        
         this.shared.HideLoading();
         this.shared.presentToast('Invalid Credentials, Please try again.');
       }
@@ -350,7 +349,7 @@ export class LoginPage implements OnInit {
         }
       },
       (error) => {
-        console.log(error);
+        
         this.shared.HideLoading();
         this.shared.presentToast('Invalid Security Code, Please try again.');
       }
@@ -358,13 +357,13 @@ export class LoginPage implements OnInit {
   }
 
   saveIdChange(e) {
-    console.log(e.detail.checked);
+    
   }
 
   async fingerPrintLogin() {
     const result = await NativeBiometric.isAvailable();
     if (result.isAvailable) {
-      let isTermsAccepted = localStorage.getItem('bioterms');
+      let isTermsAccepted = localStorage.getItem('isTermsConditionAccepted');
       let isUserLoggedIn = localStorage.getItem('user');
       if (!isUserLoggedIn || (isUserLoggedIn && (!isTermsAccepted || isTermsAccepted == 'false'))) {
         this.isFingerprintModalOpen = true;
@@ -372,8 +371,8 @@ export class LoginPage implements OnInit {
         this.makeBiometricLogin();
       }
     } else {
-      this.touchIdValue = false;
-      localStorage.setItem('fingerPrint', 'false');
+      // this.touchIdValue = false;
+      localStorage.setItem('isFingerprintEnabled', 'false');
       alert(
         "Please register your fingerprints or face ID through your mobile device's settings before using this feature"
       );
@@ -385,22 +384,23 @@ export class LoginPage implements OnInit {
   }
 
   acceptTerms() {
-    localStorage.setItem('bioterms', 'true');
-    this.touchIdValue = true;
+    localStorage.setItem('isTermsConditionAccepted', 'true');
+    // this.touchIdValue = true;
+    localStorage.setItem('isFingerprintEnabled', 'true');
     this.closeFingerprintModal();
   }
 
   declineTerms() {
-    this.touchIdValue = false;
+    // this.touchIdValue = false;
     this.closeFingerprintModal();
-    localStorage.setItem('bioterms', 'false');
-    localStorage.setItem('fingerPrint', 'false');
+    localStorage.setItem('isTermsConditionAccepted', 'false');
+    localStorage.setItem('isFingerprintEnabled', 'false');
   }
 
   makeBiometricLogin() {
     this.resumeCalledCount = 0;
-    let isFingerPrintSetupSuccess = localStorage.getItem('fingerPrint')
-      ? localStorage.getItem('fingerPrint')
+    let isFingerPrintSetupSuccess = localStorage.getItem('isFingerprintEnabled')
+      ? localStorage.getItem('isFingerprintEnabled')
       : '';
 
     let isUserExists: any = localStorage.getItem('user')
@@ -435,8 +435,8 @@ export class LoginPage implements OnInit {
           this.isValidFingerPrint = false;
         });
     } else {
-      this.touchIdValue = false;
-      localStorage.setItem('fingerPrint', 'false');
+      // this.touchIdValue = false;
+      localStorage.setItem('isFingerprintEnabled', 'false');
       alert(
         "There are no finger prints or face ID  added in your device. Please register your fingerprints or face ID through your mobile device's settings to Enable Auto login."
       );

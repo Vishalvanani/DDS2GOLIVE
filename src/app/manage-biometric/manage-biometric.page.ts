@@ -11,12 +11,15 @@ export class ManageBiometricPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.isBioTermsEnabled = localStorage.getItem('fingerPrint') && (localStorage.getItem('fingerPrint') == 'true') ? true : false;
+    this.isBioTermsEnabled = localStorage.getItem('isFingerprintEnabled') && (localStorage.getItem('isFingerprintEnabled') == 'true') ? true : false;
   }
 
   changeToggle() {
     this.isBioTermsEnabled = !this.isBioTermsEnabled;
-    localStorage.setItem('fingerPrint', this.isBioTermsEnabled ? 'true' : 'false');
+    localStorage.setItem('isFingerprintEnabled', this.isBioTermsEnabled ? 'true' : 'false');
+    if(this.isBioTermsEnabled){ 
+      localStorage.setItem('isTermsConditionAccepted', 'true');
+    }
   }
 
 }
