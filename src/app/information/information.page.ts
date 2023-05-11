@@ -28,6 +28,7 @@ export class InformationPage implements OnInit {
     private router: Router
   ) {
     this.INFO = shared.GLOBALINFO;
+    console.log('this.INFO: ', this.INFO);
     this.DriverHistory = shared.GBDRIVERHISTORY;
     this.LicenseRealId = shared.GBLicenseRealID;
     this.isLicenseCode();

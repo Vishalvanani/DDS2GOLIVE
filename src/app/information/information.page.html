@@ -282,7 +282,7 @@
     </ion-card-content>
   </ion-card> -->
 
-  <ion-accordion-group *ngIf="INFO && segment =='history' ">
+  <ion-accordion-group *ngIf="INFO && segment =='history' " [animated]="false">
     <ion-accordion value="first">
       <ion-item slot="header" color="light">
         <ion-label>Citation(s)</ion-label>
@@ -311,7 +311,7 @@
     </ion-accordion>
   </ion-accordion-group>
 
-  <ion-accordion-group *ngIf="INFO && segment =='history' ">
+  <ion-accordion-group *ngIf="INFO && segment =='history' " [animated]="false">
     <ion-accordion value="first">
       <ion-item slot="header" color="light">
         <ion-label>Withdrawl(s)</ion-label>

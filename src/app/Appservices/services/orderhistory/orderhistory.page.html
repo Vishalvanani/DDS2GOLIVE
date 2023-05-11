@@ -26,7 +26,7 @@
         <h4>
           {{orders['previousMVRData'][selectedInd]['_objMVROrderInfo']._TypeName}}
         </h4>
-        <ion-accordion-group>
+        <ion-accordion-group [animated]="false">
           <ion-accordion value="doc">
             <ion-item slot="header" color="light">
               <ion-label>Document Issued</ion-label>
@@ -189,56 +189,55 @@
             </ion-item>
 
             <div slot="content">
-            <ion-card style="margin-bottom: 10px;" *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstCitationInfo']">
-              <ion-card-content class="cardContent">
-                <ion-row>
-                  <ion-col size="6" class="col1">Description:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._CitaDesc}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Violaton Date:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._ViolDt}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Accident Involved:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._Accident}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Commercial Offence:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._CommercialOffense}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Hazardous Material:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._HazardousMaterial}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Disposition Date:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._DispositionDT}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Disposition:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._DispDesc}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Points:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._Point}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Jurisdiction:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._Jurisdiction}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6" class="col1">Court:</ion-col>
-                  <ion-col size="6" class="col2">{{doc._CitationCourtDesc}}</ion-col>
-                </ion-row>
-              </ion-card-content>
-            </ion-card>
+              <ion-card style="margin-bottom: 10px;" *ngFor="let doc of orders['previousMVRData'][selectedInd]['_lstCitationInfo']">
+                <ion-card-content class="cardContent">
+                  <ion-row>
+                    <ion-col size="6" class="col1">Description:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._CitaDesc}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Violaton Date:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._ViolDt}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Accident Involved:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._Accident}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Commercial Offence:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._CommercialOffense}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Hazardous Material:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._HazardousMaterial}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Disposition Date:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._DispositionDT}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Disposition:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._DispDesc}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Points:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._Point}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Jurisdiction:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._Jurisdiction}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="col1">Court:</ion-col>
+                    <ion-col size="6" class="col2">{{doc._CitationCourtDesc}}</ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
 
-            <div *ngIf="orders['previousMVRData'][selectedInd]['_lstCitationInfo'].length ==0">
-              <p class="txt-center">There is no citation data available.</p>
+              <div *ngIf="orders['previousMVRData'][selectedInd]['_lstCitationInfo'].length ==0">
+                <p class="txt-center">There is no citation data available.</p>
+              </div>
             </div>
-          </div>
- 
           </ion-accordion>
 
           <ion-accordion value="withdrawl">
