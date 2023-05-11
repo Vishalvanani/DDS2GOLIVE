@@ -75,6 +75,7 @@ export class OrderhistoryPage implements OnInit {
   }
 
   cancel() {
-    this.modal.dismiss(null, 'cancel');
+    this.isModalOpen = false;
+    // this.modal.dismiss(null, 'cancel');
   }
 }
