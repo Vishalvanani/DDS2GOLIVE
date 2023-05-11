@@ -278,6 +278,7 @@ export class LoginPage implements OnInit {
         respDriver.rsp_curr_docm_arrayField[0]['rsp_lic_expr_dtField'],
     };
     ARR.licenseEndors = respDriver['rsp_curr_docm_arrayField'][0];
+    ARR.licenseEndorsAll = respDriver['rsp_curr_docm_arrayField'];
     History_Arr.citation = respDriver['rsp_mvr_cita_arrayField'];
     History_Arr.withdrawls = respDriver['rsp_mvr_susp_arrayField'];
 

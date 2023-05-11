@@ -64,49 +64,51 @@
       </ion-card-content>
     </ion-card>
   
-    <ion-card>
-      <ion-card-header color="primary">
-        <ion-card-title class="cardTitle">License Information</ion-card-title>
-      </ion-card-header>
-      <ion-card-content class="cardContent">
-        <ion-row>
-          <ion-col size="6" class="col1">License Type:</ion-col>
-          <ion-col size="6" class="col2">{{INFO.licenseEndors.rsp_lic_type_descField}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6" class="col1">Class:</ion-col>
-          <ion-col size="6" class="col2">{{INFO.licenseEndors.rsp_lic_class_cdField}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6" class="col1">Status:</ion-col>
-          <ion-col size="6" class="col2" [ngClass]="INFO.licenseInfo.lic_status == 'VALID' ?'neon-color-icon': 'red-color-icon'">{{INFO.licenseInfo.lic_status}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6" class="col1">Issue Date:</ion-col>
-          <ion-col size="6" class="col2">{{INFO.licenseEndors.rsp_lic_issu_dtField}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6" class="col1">Expiration Date:</ion-col>
-          <ion-col size="6" class="col2">{{INFO.licenseEndors.rsp_lic_expr_dtField}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6" class="col1">Endorsements:</ion-col>
-          <ion-col size="6" class="col2">
-            <p *ngFor="let e of INFO.licenseEndors['rsp_lic_endr_arrayField']"  class="font-14">
-              <span *ngIf="e.rsp_lic_endr_descField">{{e.rsp_lic_endr_descField}}</span>
-            </p>
+    <ng-container *ngFor="let licenseEndor of INFO.licenseEndorsAll; let i = index">
+      <ion-card *ngIf="licenseEndor.rsp_lic_class_cdField != ' '">
+        <ion-card-header color="primary" *ngIf="i == 0">
+          <ion-card-title class="cardTitle">License Information</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="cardContent">
+          <ion-row>
+            <ion-col size="6" class="col1">License Type:</ion-col>
+            <ion-col size="6" class="col2">{{licenseEndor.rsp_lic_type_descField != " " ? licenseEndor.rsp_lic_type_descField : 'N/A' }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="col1">Class:</ion-col>
+            <ion-col size="6" class="col2">{{licenseEndor.rsp_lic_class_cdField != " " ? licenseEndor.rsp_lic_class_cdField : 'N/A'}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="col1">Status:</ion-col>
+            <ion-col size="6" class="col2" [ngClass]="INFO.licenseInfo.lic_status == 'VALID' ?'neon-color-icon': 'red-color-icon'">{{INFO.licenseInfo.lic_status}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="col1">Issue Date:</ion-col>
+            <ion-col size="6" class="col2">{{licenseEndor.rsp_lic_issu_dtField != " " ? licenseEndor.rsp_lic_issu_dtField : 'N/A'}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="col1">Expiration Date:</ion-col>
+            <ion-col size="6" class="col2">{{licenseEndor.rsp_lic_expr_dtField != " " ? licenseEndor.rsp_lic_expr_dtField : 'N/A'}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="col1">Endorsements:</ion-col>
+            <ion-col size="6" class="col2">
+              <p *ngFor="let e of licenseEndor['rsp_lic_endr_arrayField']"  class="font-14">
+                <span *ngIf="e.rsp_lic_endr_descField">{{e.rsp_lic_endr_descField}}</span>
+              </p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="col1">Restrictions:</ion-col>
+            <ion-col size="6" class="col2">
+              <p *ngFor="let r of licenseEndor['rsp_lic_rstr_arrayField']" class="font-14">
+                <span class="blue-color-icon" *ngIf="r.rsp_lic_rstr_descField">{{r.rsp_lic_rstr_descField}}</span>
+              </p>
           </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6" class="col1">Restrictions:</ion-col>
-          <ion-col size="6" class="col2">
-            <p *ngFor="let r of INFO.licenseEndors['rsp_lic_rstr_arrayField']" class="font-14">
-              <span class="blue-color-icon" *ngIf="r.rsp_lic_rstr_descField">{{r.rsp_lic_rstr_descField}}</span>
-            </p>
-        </ion-col>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
     
     <!-- <ion-card>
      <ion-card-header>
