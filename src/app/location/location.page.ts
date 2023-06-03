@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, NgZone } from '@angular/core';
 import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { Geolocation, Position } from '@capacitor/geolocation';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import cscfile from '../../assets/csclist.json';
 import locationfile from '../../assets/locationlist.json';
 import { ApiService } from '../services/api.service';

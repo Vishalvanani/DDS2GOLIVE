@@ -8,7 +8,7 @@ import { NativeBiometric } from 'capacitor-native-biometric';
 import { AES, enc } from 'crypto-js';
 import { App, AppState } from '@capacitor/app';
 import { PrivacySatementPage } from '../more/privacy-satement/privacy-satement.page';
-import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
   selector: 'app-login',
