@@ -97,10 +97,6 @@ export class ApiService {
     this.shared.showLoading();
     this.closeSession(obj).then(
       () => {
-        let isFingerPrintSetupSuccess = localStorage.getItem('isFingerprintEnabled')
-        ? localStorage.getItem('isFingerprintEnabled')
-        : '';
-        localStorage.removeItem('isTermsConditionAccepted')
         this.shared.HideLoading();
         this.router.navigate(['/login']);
       },

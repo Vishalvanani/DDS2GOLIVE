@@ -14,7 +14,7 @@ export class ServicesPage implements OnInit {
   ngOnInit() {
   }
   openinAppBrowser(url){
-    this.shared.openInappbrowser(url)
+    this.shared.openInappbrowser(url);
   }
 
   orderHistory(){

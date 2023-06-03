@@ -53,6 +53,7 @@ export class OrderhistoryPage implements OnInit {
         this.isLoadFinish = true;
         if (resp.previousOrderInfoResp) {
           this.orders = resp.previousOrderInfoResp;
+          console.log("this.orders", this.orders)
         } else {
           this.shared.presentToast('No Orders History Available.');
         }

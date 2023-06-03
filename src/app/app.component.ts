@@ -34,6 +34,7 @@ export class AppComponent {
   restartIdleLogoutTimer() {
     clearTimeout(this.idleLogoutTimer);
     this.idleLogoutTimer = setTimeout(() => {
+      this.modalCtrl.dismiss();
       this.router.navigate(['login']);
     }, 60000);
   }

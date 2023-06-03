@@ -1,0 +1,22 @@
+.SearchInputAutocomplete-div{
+    margin-left:1%;
+    padding:1%;
+    width:97%;
+    cursor: text;
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    font-size:medium;
+}
+.SearchInputAutocomplete-input{
+    border:none;
+    padding-left:1%;
+    width:90%;
+    height:100%;
+    font-size: medium;
+}
+.SearchInputAutocomplete-input[type=text]:focus{
+   outline: none;
+    padding-left:1%;
+    width:90%;
+    height:97%;
+}

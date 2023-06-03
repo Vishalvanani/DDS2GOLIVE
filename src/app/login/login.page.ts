@@ -3,10 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
-import { IonModal, Platform } from '@ionic/angular';
+import { IonModal, ModalController, Platform } from '@ionic/angular';
 import { NativeBiometric } from 'capacitor-native-biometric';
 import { AES, enc } from 'crypto-js';
 import { App, AppState } from '@capacitor/app';
+import { PrivacySatementPage } from '../more/privacy-satement/privacy-satement.page';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -22,35 +25,17 @@ export class LoginPage implements OnInit {
 
   secretKey = 'test123';
   showPassword: boolean = false;
-  cardList: any = [
-    {
-      logo: "assets/imgs/dollar.png",
-      name: "Pay a super speeder fee, reinstatement fee or pending suspensions.",
-      url: "https://dds.georgia.gov/georgia-licenseid"
-    },
-    {
-      logo: "assets/imgs/edit.png",
-      name: "Forms to complete before visiting a customer service center.",
-      url: "https://dds.georgia.gov/georgia-licenseid"
-    },
-    {
-      logo: "assets/imgs/date.png",
-      name: "Make a road test a reservation",
-      url: "https://dds.georgia.gov/georgia-licenseid"
-    },
-    {
-      logo: "assets/imgs/cert.png",
-      name: "Verify or print a certificate for a defensive driving or risk reduction course.",
-      url: "https://dds.georgia.gov/georgia-licenseid"
-    },
-  ];
   resumeCalledCount: number = 0;
+  isTermsConditionAccepted: boolean;
   constructor(
     public formBuilder: FormBuilder,
     private Apiauth: ApiService,
     private shared: SharedService,
+    private modalCtrl: ModalController,
     private changeDetectorRef: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private iab: InAppBrowser,
+
   ) {
     this.loginForm = this.formBuilder.group({
       userEmail: [
@@ -73,8 +58,6 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter(){ 
     let saveId = localStorage.getItem('saveid')
-    // let isTermsConditionAccepted = localStorage.getItem('isTermsConditionAccepted')
-    // if(isTermsConditionAccepted) { localStorage.setItem('isFingerprintEnabled', 'true'); }
     this.loginForm?.get('userEmail')?.reset();
     this.loginForm?.get('userPassword')?.reset()
     if (saveId) {
@@ -85,6 +68,20 @@ export class LoginPage implements OnInit {
       this.loginForm?.get('userEmail')?.setValue(userId.UserID);
     } else {
     }
+  }
+
+  openinAppBrowser(url){
+    let options: InAppBrowserOptions = {
+      zoom: 'no',
+      clearcache: 'yes',
+      clearsessioncache: 'yes',
+      toolbarcolor: '#ffffff',
+      hideurlbar: 'yes', // hide the url toolbar
+      hidenavigationbuttons: 'no', // hide navigation buttons back/forward,
+      location: 'no'
+    };
+
+    const browser = this.iab.create(url, '_blank', options);
   }
 
   ngOnInit() {
@@ -109,9 +106,9 @@ export class LoginPage implements OnInit {
 }
 
 
-  openinAppBrowser(url){
-    this.shared.openInappbrowser(url)
-  }
+  // openinAppBrowser(url){
+  //   this.shared.openInappbrowser(url);
+  // }
 
   toggleEye() {
     this.showPassword = !this.showPassword;
@@ -215,10 +212,6 @@ export class LoginPage implements OnInit {
             } else {
               localStorage.removeItem('saveid');
             }
-
-            // if (this.touchIdValue) {
-            //   localStorage.setItem('isFingerprintEnabled', 'true');
-            // }
             await this.filterResp(resp);
             this.setOpen(true);
           } else {
@@ -342,6 +335,11 @@ export class LoginPage implements OnInit {
 
         let respObj = resp.twoFactorAuthResponse;
         if (respObj.valid) {
+          // --- check if fingerprint is enabled or not ---
+          let isFingerprintEnabled = localStorage.getItem('isFingerprintEnabled');
+          if(this.isTermsConditionAccepted && !isFingerprintEnabled) {
+            localStorage.setItem('isFingerprintEnabled', 'true');
+          }
           this.securityCode = '';
           this.modal.dismiss();
           this.router.navigate(['/tabs/tabs/tab3']);
@@ -350,7 +348,6 @@ export class LoginPage implements OnInit {
         }
       },
       (error) => {
-        
         this.shared.HideLoading();
         this.shared.presentToast('Invalid Security Code, Please try again.');
       }
@@ -364,15 +361,15 @@ export class LoginPage implements OnInit {
   async fingerPrintLogin() {
     const result = await NativeBiometric.isAvailable();
     if (result.isAvailable) {
-      let isTermsAccepted = localStorage.getItem('isTermsConditionAccepted');
       let isUserLoggedIn = localStorage.getItem('user');
-      if (!isUserLoggedIn || (isUserLoggedIn && (!isTermsAccepted || isTermsAccepted == 'false'))) {
-        this.isFingerprintModalOpen = true;
+      let isFingerprintEnabled = localStorage.getItem('isFingerprintEnabled');
+      if(isUserLoggedIn && isFingerprintEnabled) {
+        this.makeBiometricLogin()
       } else {
-        this.makeBiometricLogin();
+        this.isFingerprintModalOpen = true;
       }
     } else {
-      localStorage.setItem('isFingerprintEnabled', 'false');
+      localStorage.removeItem('isFingerprintEnabled');
       alert(
         "Please register your fingerprints or face ID through your mobile device's settings before using this feature"
       );
@@ -384,17 +381,13 @@ export class LoginPage implements OnInit {
   }
 
   acceptTerms() {
-    localStorage.setItem('isTermsConditionAccepted', 'true');
-    // this.touchIdValue = true;
-    localStorage.setItem('isFingerprintEnabled', 'true');
+    this.isTermsConditionAccepted = true;
     this.closeFingerprintModal();
   }
 
   declineTerms() {
-    // this.touchIdValue = false;
+    this.isTermsConditionAccepted = false;
     this.closeFingerprintModal();
-    localStorage.setItem('isTermsConditionAccepted', 'false');
-    localStorage.setItem('isFingerprintEnabled', 'false');
   }
 
   makeBiometricLogin() {
@@ -409,6 +402,15 @@ export class LoginPage implements OnInit {
     if (isUserExists && isFingerPrintSetupSuccess == 'true') {
       this.performBiometricVerificatin();
     }
+  }
+
+
+  async privacy(){
+    const modal =await this.modalCtrl.create({
+      component: PrivacySatementPage,
+      componentProps: { isFrom: 'login'}
+    });
+    modal.present();
   }
 
   async performBiometricVerificatin() {
@@ -435,8 +437,7 @@ export class LoginPage implements OnInit {
           this.isValidFingerPrint = false;
         });
     } else {
-      // this.touchIdValue = false;
-      localStorage.setItem('isFingerprintEnabled', 'false');
+      localStorage.removeItem('isFingerprintEnabled');
       alert(
         "There are no finger prints or face ID  added in your device. Please register your fingerprints or face ID through your mobile device's settings to Enable Auto login."
       );
@@ -452,10 +453,10 @@ export class LoginPage implements OnInit {
   }
 
   forgotpwd() {
-    this.shared.openInappbrowser('https://dds.drives.ga.gov/_/')
+    this.shared.openInappbrowser('https://dds.drives.ga.gov/_/');
   }
 
   createAcc() {
-    this.shared.openInappbrowser('https://dds.drives.ga.gov/_/')
+    this.shared.openInappbrowser('https://dds.drives.ga.gov/_/');
   } 
 }

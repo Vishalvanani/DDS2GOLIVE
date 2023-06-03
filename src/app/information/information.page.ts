@@ -28,7 +28,6 @@ export class InformationPage implements OnInit {
     private router: Router
   ) {
     this.INFO = shared.GLOBALINFO;
-    console.log('this.INFO: ', this.INFO);
     this.DriverHistory = shared.GBDRIVERHISTORY;
     this.LicenseRealId = shared.GBLicenseRealID;
     this.isLicenseCode();
@@ -43,6 +42,10 @@ export class InformationPage implements OnInit {
       return ele.rsp_mvr_susp_descField.trim();
     })
 
+  }
+
+  ionViewWillEnter(){
+    this.segment =  'info';
   }
 
   ngOnInit() {}

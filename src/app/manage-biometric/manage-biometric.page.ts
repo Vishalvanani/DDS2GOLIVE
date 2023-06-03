@@ -16,9 +16,10 @@ export class ManageBiometricPage implements OnInit {
 
   changeToggle() {
     this.isBioTermsEnabled = !this.isBioTermsEnabled;
-    localStorage.setItem('isFingerprintEnabled', this.isBioTermsEnabled ? 'true' : 'false');
-    if(this.isBioTermsEnabled){ 
-      localStorage.setItem('isTermsConditionAccepted', 'true');
+    if(this.isBioTermsEnabled) {
+      localStorage.setItem('isFingerprintEnabled', 'true');
+    } else {
+      localStorage.removeItem('isFingerprintEnabled');
     }
   }
 

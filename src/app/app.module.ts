@@ -15,7 +15,9 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot(
+      { animated: false } 
+      ),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

@@ -88,8 +88,9 @@ export class SharedService {
       toolbarcolor: '#ffffff',
       hideurlbar: 'yes', // hide the url toolbar
       hidenavigationbuttons: 'no', // hide navigation buttons back/forward
+      location: 'no'
     };
 
-    const browser = this.iab.create(url, '_blank', options);
+    this.iab.create(url, '_blank', options);
   }
 }

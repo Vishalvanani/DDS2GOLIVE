@@ -2,8 +2,23 @@ ion-content{
   //For Andriod need to set background-none else map will not show up
   --background: none;
 }
+ion-segment-button.md::part(indicator-background){
+  background:#103a84;
+}
+ion-segment-button.ios::part(indicator-background){
+  background:white;
+}
 .container {
   height:100%;
+  width: 100%;
+}
+.container-map {
+  height:70%;
+  width: 100%;
+  position:absolute;
+}
+.container-list{
+  height: 60%;
   width: 100%;
 }
 .viewcontainer{
@@ -13,7 +28,7 @@ ion-content{
 capacitor-google-map{
   display: inline-block;
   width: 100%;
-  height: 55%;
+  height: 50%;
 }
 .scroll {
   height: 100%;
@@ -29,4 +44,9 @@ ion-list-header{
   padding: 0%;
   margin: 0%;
   padding-left: 5%;
+  margin-top:-4%;
+  background-color: rgb(226, 226, 226);
+}
+ion-toolbar{
+  --background:#103a84;
 }

@@ -27,7 +27,7 @@ export class MorePage implements OnInit {
   }
 
   openinAppBrowser(url){
-    this.shared.openInappbrowser(url)
+    this.shared.openInappbrowser(url);
   }
 
   contactUs(){

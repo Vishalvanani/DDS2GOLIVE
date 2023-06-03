@@ -74,6 +74,7 @@ ion-modal{
 }
 
 .grid-card {
+  margin: 5px;
   min-height: 130px;
   padding: 5px;
   img {
@@ -98,4 +99,8 @@ ion-modal{
 }
 .blue-color{
   color: #294980;
+}
+.segment-button-checked ::ng-deep{
+  color: #807f7f;
+  --indicator-color: transparent;
 }

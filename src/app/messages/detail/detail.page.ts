@@ -25,6 +25,10 @@ export class DetailPage implements OnInit {
     this.location.back();
   }
 
+  ngOnDestroy(){
+    this.location.back();
+  }
+
   updateReadStatus() {
  
     let params = {

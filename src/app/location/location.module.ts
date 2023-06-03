@@ -8,6 +8,7 @@ import { LocationPageRoutingModule } from './location-routing.module';
 
 import { LocationPage } from './location.page';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AutocompleteComponent } from '../google-places/google-places.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -15,7 +16,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     IonicModule,
     LocationPageRoutingModule
   ],
-  declarations: [LocationPage],
+  declarations: [
+    LocationPage,
+    AutocompleteComponent
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LocationPageModule {}
