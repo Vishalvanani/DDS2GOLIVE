@@ -70,7 +70,9 @@ export class LoginPage implements OnInit {
     }
   }
 
+  isBrowserOpen: boolean = false;
   openinAppBrowser(url){
+    this.isBrowserOpen = true;
     let options: InAppBrowserOptions = {
       zoom: 'no',
       clearcache: 'yes',
@@ -82,6 +84,9 @@ export class LoginPage implements OnInit {
     };
 
     const browser = this.iab.create(url, '_blank', options);
+    browser.on('exit').subscribe((res) => {
+      this.isBrowserOpen = false;
+    });
   }
 
   ngOnInit() {
@@ -90,9 +95,9 @@ export class LoginPage implements OnInit {
   
   ionViewWillEnter(){
     App.addListener('appStateChange', (state: AppState) => {
-      if (state.isActive) {
+      if (state.isActive && !this.isBrowserOpen) {
         this.resumeCalledCount++;
-        if(this.resumeCalledCount > 1){
+        if (this.resumeCalledCount > 1) {
           this.makeBiometricLogin();
         }
       } else {
