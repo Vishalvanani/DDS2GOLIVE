@@ -49,9 +49,11 @@ ionViewWillEnter(){
 }
 ionViewDidEnter(){
   setTimeout(() => {
-  this.createMap();
-  }, 1);
-  }
+    this.address='';
+    this.markers=[];
+    this.createMap();
+  }, 1000);
+}
   /*Check which segment is selected*/
   async mapViewChangeAction(event){
     switch(event.target.value){
@@ -93,7 +95,7 @@ ionViewDidEnter(){
         },
         zoom:9,
       },
-    });
+        });
     console.log('after gmapcreate');
     //setTimeout(() => {
       this.addMarkers();
