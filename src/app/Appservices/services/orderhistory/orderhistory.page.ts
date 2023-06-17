@@ -45,7 +45,7 @@ export class OrderhistoryPage implements OnInit {
       serviceType: 'getorders',
       //content-Type: 'application/json',
     };
-
+    console.log('orderhistory loader')
     this.shared.showLoading();
     this.Apiauth.doHttp(request).subscribe(
       async (resp: any) => {

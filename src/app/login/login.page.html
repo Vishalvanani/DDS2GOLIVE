@@ -43,7 +43,7 @@
   
       <ion-item class="ion-no-padding" lines="none" (click)="fingerPrintLogin()">
         <ion-icon slot="start" name="finger-print-outline" style="margin-right:5px;color: #103a84"></ion-icon>
-        <div class="blueClr">Fingerprint Login</div>
+        <div class="blueClr" style="margin-left: 10px;">Biometric Login</div>
       </ion-item>
   
       <ion-button 
@@ -53,10 +53,10 @@
       > Log in </ion-button>
   
       <div class="forgot" (click)="forgotpwd()">Forgot email address or password?</div>
+      <div class="createAcc" (click)="createAcc()">Don't have DDS Online Services account? <span class="forgot">Sign Up!</span></div>
     </ion-card>
   </form>
   
-    <ion-button expand="block" class="createAccBtn" (click)="createAcc()"> Create Account </ion-button>
     <ion-row class="ion-no-padding">
       <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.georgia.gov/georgia-licenseid/general-license-topics/real-id')">
         <ion-card class="grid-card">
@@ -83,7 +83,9 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <div class="forgot privacy" (click)="privacy()">Privacy Policy | Terms and Conditions of Use</div>
+    <div style="  width: fit-content;margin: auto;margin-top: 20px;">
+      <span (click)="privacy()" class="forgot">Privacy Policy</span> | <span class="forgot" (click)="terms()">Terms and Conditions of Use</span>
+    </div>
   </div>
     <br>
     <ion-modal
@@ -118,13 +120,13 @@
             </p>
           </div>
   
-          <ion-item style="border-bottom: 1px solid #999;">
+          <ion-item style="border-bottom: 1px solid #999;" class="securityCode">
             <ion-label position="stacked">Security Code</ion-label>
             <ion-input
               type="text"
               placeholder=""
-              [(ngModel)]="securityCode"
-              required
+              [(ngModel)]="securityCode" 
+              
             ></ion-input>
           </ion-item>
   

@@ -43,13 +43,10 @@ ion-modal{
   margin-left: 0px;
 }
 
-.createAccBtn {
-  width: 70%;
-  margin: auto;
-  margin-top: 20px;
-  --border-radius: 4px;
-  height: 45px;
-  margin-bottom: 10px;
+.createAcc {
+  text-align: center;
+  margin-top: 15px;
+  color: #000;
 }
 
 .loginBtn {
@@ -64,13 +61,12 @@ ion-modal{
 
 .forgot {
   text-align: center;
-  margin-top: 20px;
   font-size: 15px;
   color: #103a84;
-}
-
-.privacy {
-  width: 100%;
+  border-bottom: 1px solid;
+  width: fit-content;
+  margin: auto;
+  margin-top: 20px;
 }
 
 .grid-card {
@@ -103,4 +99,10 @@ ion-modal{
 .segment-button-checked ::ng-deep{
   color: #807f7f;
   --indicator-color: transparent;
+}
+.securityCode {
+  --highlight-height: 1px;
+  --highlight-color-focused: #fff;
+  --highlight-color-valid: #fff;
+  --highlight-color-invalid: #fff;
 }

@@ -46,7 +46,7 @@ export class DetailPage implements OnInit {
       method: 'post',
       serviceType: 'updatemessages',
     };
-
+console.log('detail loader')
     this.shared.showLoading();
     this.Apiauth.doHttp(request).subscribe(
       async (resp:any) => {

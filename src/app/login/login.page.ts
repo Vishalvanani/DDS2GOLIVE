@@ -9,6 +9,7 @@ import { AES, enc } from 'crypto-js';
 import { App, AppState } from '@capacitor/app';
 import { PrivacySatementPage } from '../more/privacy-satement/privacy-satement.page';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { TermsConditionPage } from 'app/terms-condition/terms-condition.page';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginPage implements OnInit {
   showPassword: boolean = false;
   resumeCalledCount: number = 0;
   isTermsConditionAccepted: boolean;
+  isPrivacyAccepted: boolean;
   constructor(
     public formBuilder: FormBuilder,
     private Apiauth: ApiService,
@@ -56,7 +58,7 @@ export class LoginPage implements OnInit {
 
   // good@gmail.com - Password@1
 
-  ionViewDidEnter(){ 
+  ionViewDidEnter() {
     let saveId = localStorage.getItem('saveid')
     this.loginForm?.get('userEmail')?.reset();
     this.loginForm?.get('userPassword')?.reset()
@@ -71,7 +73,7 @@ export class LoginPage implements OnInit {
   }
 
   isBrowserOpen: boolean = false;
-  openinAppBrowser(url){
+  openinAppBrowser(url) {
     this.isBrowserOpen = true;
     let options: InAppBrowserOptions = {
       zoom: 'no',
@@ -92,23 +94,26 @@ export class LoginPage implements OnInit {
   ngOnInit() {
 
   }
-  
-  ionViewWillEnter(){
+
+  isCalledRunning: boolean = false;
+  isFingerprintCancelled: boolean = false;
+  ionViewWillEnter() {
     App.addListener('appStateChange', (state: AppState) => {
-      if (state.isActive && !this.isBrowserOpen) {
+      if (!state.isActive) this.isFingerprintCancelled = false;
+      if (this.isFingerprintCancelled) return;
+      if (state.isActive && !this.isBrowserOpen && !this.isCalledRunning && !this.router.url.includes("location")) {
+        this.isCalledRunning = true;
         this.resumeCalledCount++;
-        if (this.resumeCalledCount > 1) {
-          this.makeBiometricLogin();
-        }
+        this.makeBiometricLogin();
       } else {
-        console.log('App has become inactive');
+        this.isCalledRunning = false;
       }
     });
   }
 
   ngOnDestroy() {
     App.removeAllListeners();
-}
+  }
 
 
   // openinAppBrowser(url){
@@ -165,13 +170,13 @@ export class LoginPage implements OnInit {
   navToPayzee() {
     this.router.navigate(['payeezy-payment']);
   }
-  
+
   more() {
-    this.router.navigate(['more', { isFrom: 'login'}]);
+    this.router.navigate(['more', { isFrom: 'login' }]);
   }
 
   location() {
-    this.router.navigate(['location', { isFrom: 'login'}]);
+    this.router.navigate(['location', { isFrom: 'login' }]);
   }
 
   async clickSubmit() {
@@ -183,7 +188,7 @@ export class LoginPage implements OnInit {
       UserID: ionform.userEmail,
     };
 
-    
+
     this.submitForm(params);
   }
 
@@ -194,7 +199,7 @@ export class LoginPage implements OnInit {
       method: 'post',
       serviceType: 'login',
     };
-
+    console.log('login loader')
     this.shared.showLoading();
     await this.generateToken();
 
@@ -229,7 +234,7 @@ export class LoginPage implements OnInit {
         }
       },
       (error) => {
-        
+
         this.shared.HideLoading();
         this.shared.presentToast('Invalid Credentials, Please try again.');
       }
@@ -319,6 +324,29 @@ export class LoginPage implements OnInit {
     this.modal.dismiss();
   }
 
+  subscribeToNotification() {
+    let request = {
+      params: {
+        DeviceToken: localStorage.getItem('firebasePushToken'),
+        ClientIP: this.shared.CLIENT_IP + '_' + this.shared.DDS_V,
+        DriverIdentifier: this.shared.GBLogoutObj.DriverIdentifier,
+        LicIDNbr: this.shared.GBLogoutObj.LicIDNbr
+      },
+      action_url: '/Notify/Subscribe',
+      method: 'post',
+      serviceType: 'notify',
+    };
+
+    this.Apiauth.doHttp(request).subscribe(
+    //this.Apiauth.registerNotificationSub(request).subscribe(
+      (resp: any) => {
+        console.log('registerNotification resp', resp)
+      },
+      (error) => {
+        console.log('error', error)
+      })
+  }
+
   validateSecurityCode() {
     let params = {
       ClientIP: this.shared.CLIENT_IP + '_' + this.shared.DDS_V,
@@ -332,7 +360,7 @@ export class LoginPage implements OnInit {
       method: 'post',
       serviceType: 'twofactor',
     };
-
+console.log('login2 loader')
     this.shared.showLoading();
     this.Apiauth.doHttp(request).subscribe(
       async (resp: any) => {
@@ -342,25 +370,27 @@ export class LoginPage implements OnInit {
         if (respObj.valid) {
           // --- check if fingerprint is enabled or not ---
           let isFingerprintEnabled = localStorage.getItem('isFingerprintEnabled');
-          if(this.isTermsConditionAccepted && !isFingerprintEnabled) {
+          if (this.isTermsConditionAccepted && !isFingerprintEnabled) {
             localStorage.setItem('isFingerprintEnabled', 'true');
           }
           this.securityCode = '';
+          // ---
+          this.subscribeToNotification();
           this.modal.dismiss();
           this.router.navigate(['/tabs/tabs/tab3']);
         } else {
           this.shared.presentToast(respObj.validationMessage);
         }
       },
-      (error) => {
-        this.shared.HideLoading();
-        this.shared.presentToast('Invalid Security Code, Please try again.');
-      }
+          (error) => {
+            this.shared.HideLoading();
+            this.shared.presentToast('Invalid Security Code, Please try again.');
+          }
     );
   }
 
   saveIdChange(e) {
-    
+
   }
 
   async fingerPrintLogin() {
@@ -368,7 +398,7 @@ export class LoginPage implements OnInit {
     if (result.isAvailable) {
       let isUserLoggedIn = localStorage.getItem('user');
       let isFingerprintEnabled = localStorage.getItem('isFingerprintEnabled');
-      if(isUserLoggedIn && isFingerprintEnabled) {
+      if (isUserLoggedIn && isFingerprintEnabled) {
         this.makeBiometricLogin()
       } else {
         this.isFingerprintModalOpen = true;
@@ -385,6 +415,15 @@ export class LoginPage implements OnInit {
     this.isFingerprintModalOpen = false;
   }
 
+  acceptPrivacy() {
+    this.isPrivacyAccepted = true;
+    this.closeFingerprintModal();
+  }
+
+  declinePrivacy() {
+    this.isPrivacyAccepted = false;
+    this.closeFingerprintModal();
+  }
   acceptTerms() {
     this.isTermsConditionAccepted = true;
     this.closeFingerprintModal();
@@ -406,14 +445,23 @@ export class LoginPage implements OnInit {
       : '';
     if (isUserExists && isFingerPrintSetupSuccess == 'true') {
       this.performBiometricVerificatin();
+    } else {
+      this.isCalledRunning = false;
     }
   }
 
 
-  async privacy(){
-    const modal =await this.modalCtrl.create({
+  async privacy() {
+    const modal = await this.modalCtrl.create({
       component: PrivacySatementPage,
-      componentProps: { isFrom: 'login'}
+      componentProps: { isFrom: 'login' }
+    });
+    modal.present();
+  }
+  async terms() {
+    const modal = await this.modalCtrl.create({
+      component: TermsConditionPage,
+      componentProps: { isFrom: 'login' }
     });
     modal.present();
   }
@@ -430,7 +478,7 @@ export class LoginPage implements OnInit {
 
         .then(() => {
           this.isValidFingerPrint = true;
-
+          this.isCalledRunning = false;
           let isUserExists: any = localStorage.getItem('user')
             ? localStorage.getItem('user')
             : '';
@@ -439,9 +487,12 @@ export class LoginPage implements OnInit {
           }
         })
         .catch(() => {
+          this.isFingerprintCancelled = true;
+          this.isCalledRunning = false;
           this.isValidFingerPrint = false;
         });
     } else {
+      this.isCalledRunning = false;
       localStorage.removeItem('isFingerprintEnabled');
       alert(
         "There are no finger prints or face ID  added in your device. Please register your fingerprints or face ID through your mobile device's settings to Enable Auto login."
@@ -463,5 +514,5 @@ export class LoginPage implements OnInit {
 
   createAcc() {
     this.shared.openInappbrowser('https://dds.drives.ga.gov/_/');
-  } 
+  }
 }

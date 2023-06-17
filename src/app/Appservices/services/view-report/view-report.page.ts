@@ -33,7 +33,7 @@ export class ViewReportPage implements OnInit {
       serviceType: 'getorders',
    //   content-Type: 'application/json',
     };
-
+    console.log('report loader')
     this.shared.showLoading();
     this.Apiauth.doHttp(request).subscribe(
       async (resp:any) => {

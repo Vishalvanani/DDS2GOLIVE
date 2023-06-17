@@ -50,6 +50,10 @@ const routes: Routes = [
   {
     path: 'manage-biometric',
     loadChildren: () => import('./manage-biometric/manage-biometric.module').then( m => m.ManageBiometricPageModule)
+  },
+  {
+    path: 'terms-condition',
+    loadChildren: () => import('./terms-condition/terms-condition.module').then( m => m.TermsConditionPageModule)
   }
 
 ];

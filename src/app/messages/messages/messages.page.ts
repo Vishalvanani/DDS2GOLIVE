@@ -35,7 +35,7 @@ export class MessagesPage implements OnInit {
       method: 'post',
       serviceType: 'messages',
     };
-
+    console.log('message loader')
     this.shared.showLoading();
     this.isNoMsg = false;
     this.Apiauth.doHttp(request).subscribe(

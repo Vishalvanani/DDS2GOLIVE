@@ -45,6 +45,7 @@ export class ApiService {
     } else {
       //.set('Authorization', 'Basic ' + btoa('test:test@123'))
     }
+    
 
     // console.log(headers)
     if (!this.checkInternet()) {
@@ -68,6 +69,38 @@ export class ApiService {
       });
     }
   }
+
+  registerNotification(request){
+    let api_url = 'https://onlinemvrdev.dds.ga.gov/MobileMbassGST/Notify/';
+    const username = 'DDSPSUSERSFB';
+    const password = 'CY!GD06AG';
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + btoa(username + ':' + password)
+    });
+    let params = request.params;
+    headers.append('Content-Type', 'application/json');
+    return this.httpclient.post(api_url + request.action_url, params, {
+      headers: headers,
+    })
+  }
+
+ /*  registerNotificationSub(request) {
+    let api_url = 'https://onlinemvrdev.dds.ga.gov/MobileMbassGST/Notify/';
+    const headers = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + this.shared.GBAPI_TOKEN)
+    .set('pragma', 'no-cache')
+    .set('Access-Control-Allow-Origin', '*')
+    .set(
+      'cache-control',
+      'no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
+    )
+    let params = request.params;
+    headers.append('Content-Type', 'application/json');
+    return this.httpclient.post(api_url + request.action_url, params, {
+      headers: headers,
+    })
+  } */
 
   checkInternet() {
     return navigator.onLine;
@@ -94,6 +127,7 @@ export class ApiService {
 
   logoutApp() {
     let obj = this.shared.GBLogoutObj;
+    console.log('logout loader')
     this.shared.showLoading();
     this.closeSession(obj).then(
       () => {
