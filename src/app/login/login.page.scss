@@ -1,7 +1,7 @@
 ion-modal {
   ion-button {
     font-size: 16px !important;
-}
+  }
 
   ion-item {
     --padding-start: 0px !important;
@@ -29,8 +29,8 @@ ion-modal{
 
 .logo {
   width: 70%;
-    margin: auto;
-    display: table;
+  margin: auto;
+  display: table;
 }
 .login-hd::after {
   background-image: none !important;
@@ -59,6 +59,14 @@ ion-modal{
   --background: #666666;
 }
 
+.btnEnabled {
+  --background: #294980;
+}
+
+.btnDisabled {
+  --background: #666666;
+}
+
 .forgot {
   text-align: center;
   font-size: 15px;
@@ -71,7 +79,7 @@ ion-modal{
 
 .grid-card {
   margin: 5px;
-  min-height: 130px;
+  min-height: 110px;
   padding: 5px;
   img {
     margin: auto;
@@ -105,4 +113,8 @@ ion-modal{
   --highlight-color-focused: #fff;
   --highlight-color-valid: #fff;
   --highlight-color-invalid: #fff;
+}
+
+.mb5{
+  margin-bottom: -5px;
 }

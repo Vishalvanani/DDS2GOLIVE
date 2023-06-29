@@ -11,7 +11,6 @@ ion-segment-button.ios::part(indicator-background){
 .container {
   height:100%;
   width: 100%;
-  background-color: #fff;
 }
 .container-map {
   height:70%;
@@ -19,7 +18,7 @@ ion-segment-button.ios::part(indicator-background){
   position:absolute;
 }
 .container-list{
-  height: 60%;
+  height: 80%;
   width: 100%;
 }
 .viewcontainer{

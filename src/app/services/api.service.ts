@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class ApiService {
   APIURL: string = 'https://onlinemvrdev.dds.ga.gov/MobileMbassGSS';
+  //APIURL: string = 'https://onlinemvrdev.dds.ga.gov/MobileMbassGSS';
   //APIURL:string='https://onlinemvrdev.dds.ga.gov/MobileMbassGST_V2';
 
   constructor(
@@ -71,7 +72,7 @@ export class ApiService {
   }
 
   registerNotification(request){
-    let api_url = 'https://onlinemvrdev.dds.ga.gov/MobileMbassGST/Notify/';
+    let api_url = 'https://onlinemvrdev.dds.ga.gov/MobileMbassGSS/Notify/';
     const username = 'DDSPSUSERSFB';
     const password = 'CY!GD06AG';
     const headers = new HttpHeaders({

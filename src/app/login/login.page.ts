@@ -9,7 +9,7 @@ import { AES, enc } from 'crypto-js';
 import { App, AppState } from '@capacitor/app';
 import { PrivacySatementPage } from '../more/privacy-satement/privacy-satement.page';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { TermsConditionPage } from 'app/terms-condition/terms-condition.page';
+import { TermsConditionPage } from '../terms-condition/terms-condition.page';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +29,7 @@ export class LoginPage implements OnInit {
   resumeCalledCount: number = 0;
   isTermsConditionAccepted: boolean;
   isPrivacyAccepted: boolean;
+  selectedSegment: string = null;
   constructor(
     public formBuilder: FormBuilder,
     private Apiauth: ApiService,
@@ -36,6 +37,7 @@ export class LoginPage implements OnInit {
     private modalCtrl: ModalController,
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
+    public platform: Platform,
     private iab: InAppBrowser,
 
   ) {
@@ -261,7 +263,8 @@ export class LoginPage implements OnInit {
       points: respDriver['rsp_pointsField'],
       existfee: existfee,
       blood_type: respDriver['rsp_blood_typeField'],
-      donor: respDriver['rsp_organ_donor_flField'] == 'Y' ? 'YES' : 'NO',
+      donor: respDriver['rsp_organ_donor_flField'] 
+     // == 'Y' ? 'YES' : 'NO',
     };
     ARR.addressInfo = {
       addr_type:
@@ -269,7 +272,9 @@ export class LoginPage implements OnInit {
       city: respDriver.rsp_curr_addrsField[0]['rsp_curr_addr_cityField'],
       state: respDriver.rsp_curr_addrsField[0]['rsp_curr_addr_state_cdField'],
       zipcode:
-        respDriver.rsp_curr_addrsField[0]['rsp_curr_addr_postal_cdField'],
+      respDriver.rsp_curr_addrsField[0]['rsp_curr_addr_postal_cdField'],
+        //respDriver.rsp_curr_addrsField.substr(0,5) + '-' + respDriver.rsp_curr_addrsField.substr(5,10)
+        
     };
     ARR.licenseInfo = {
       lic_number: respDriver['rsp_lic_idField'],
@@ -330,7 +335,7 @@ export class LoginPage implements OnInit {
         DeviceToken: localStorage.getItem('firebasePushToken'),
         ClientIP: this.shared.CLIENT_IP + '_' + this.shared.DDS_V,
         DriverIdentifier: this.shared.GBLogoutObj.DriverIdentifier,
-        LicIDNbr: this.shared.GBLogoutObj.LicIDNbr
+        licenseNbr: this.shared.GBLogoutObj.LicIDNbr
       },
       action_url: '/Notify/Subscribe',
       method: 'post',
@@ -375,7 +380,9 @@ console.log('login2 loader')
           }
           this.securityCode = '';
           // ---
-          this.subscribeToNotification();
+          if (!localStorage.getItem('firebasePushToken')) {
+            this.subscribeToNotification();
+          }
           this.modal.dismiss();
           this.router.navigate(['/tabs/tabs/tab3']);
         } else {
@@ -513,6 +520,6 @@ console.log('login2 loader')
   }
 
   createAcc() {
-    this.shared.openInappbrowser('https://dds.drives.ga.gov/_/');
+    this.shared.openInappbrowser('https://dds.drives.ga.gov/?link=UserRegistration');
   }
 }

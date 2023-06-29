@@ -49,37 +49,39 @@
       <ion-button 
         class="ion-text-uppercase loginBtn" 
         [disabled]="!loginForm.valid"  
+        [ngClass]="loginForm.valid ? 'btnEnabled' : 'btnDisabled'"
         type="submit"
       > Log in </ion-button>
   
       <div class="forgot" (click)="forgotpwd()">Forgot email address or password?</div>
-      <div class="createAcc" (click)="createAcc()">Don't have DDS Online Services account? <span class="forgot">Sign Up!</span></div>
+      <div class="createAcc" (click)="createAcc()">Don't have DDS Online Services account?</div>
+      <div class="createAcc"> <span class="forgot">Sign Up!</span></div>
     </ion-card>
   </form>
   
     <ion-row class="ion-no-padding">
-      <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.georgia.gov/georgia-licenseid/general-license-topics/real-id')">
+      <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.drives.ga.gov/?link=PayFees')">
         <ion-card class="grid-card">
           <div><img src="assets/imgs/dollar.png" alt="" /></div>
-          <div> Pay a super speeder fee, reinstatement fee or pending suspensions.</div>
+          <div> PAY FEE(S)</div>
         </ion-card>
       </ion-col>
-      <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.georgia.gov/dds-forms-and-manuals/manuals')">
+      <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.drives.ga.gov/?link=CscSkipAStep')">
         <ion-card class="grid-card">
           <div><img src="assets/imgs/edit.png" alt="" /></div>
-          <div> Forms to complete before visiting a customer service center.</div>
+          <div> VISITING A CENTER? START HERE!</div>
         </ion-card>
       </ion-col>
-      <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.georgia.gov/georgia-licenseid')">
+      <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.drives.ga.gov/?link=RoadTest')">
         <ion-card class="grid-card">
           <div><img src="assets/imgs/date.png" alt="" /></div>
-          <div> Make a road test a reservation</div>
+          <div> MAKE A ROAD TEST APPOINTMENT</div>
         </ion-card>
       </ion-col>
-      <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.georgia.gov/georgia-licenseid')">
+      <ion-col size="6" class="ion-no-padding" (click)="openinAppBrowser('https://dds.drives.ga.gov/?link=OCRA')">
         <ion-card class="grid-card">
           <div><img src="assets/imgs/cert.png" alt="" /></div>
-          <div> Verify or print a certificate for a defensive driving or risk reduction course.</div>
+          <div> VERIFY OR PRINT A CERTIFICATE</div>
         </ion-card>
       </ion-col>
     </ion-row>
@@ -220,13 +222,13 @@
     </ion-modal>
   </ion-content>
   <ion-footer>
-    <ion-toolbar>
-      <ion-segment mode="md" style="height: 50px;">
-        <ion-segment-button (click)="location()">
+    <ion-toolbar color="primary">
+      <ion-segment mode="md" style="height: 50px;" [ngClass]="platform.is('ios') ? 'mb5':''" [(ngModel)]="selectedSegment">
+        <ion-segment-button (click)="location()" value="Location">
           <ion-icon name="business-outline"></ion-icon>
           <ion-label>Location</ion-label>
         </ion-segment-button>
-        <ion-segment-button (click)="more()">
+        <ion-segment-button (click)="more()" value="Location">
           <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
           <ion-label>More</ion-label>
         </ion-segment-button>

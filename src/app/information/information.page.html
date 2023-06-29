@@ -21,7 +21,7 @@
 
 
   <div class="real-id-card" *ngIf="INFO && segment =='info' ">
-   <div class="welcomeMsg">Welcome, georgia sample</div>
+    <div class="welcomeMsg">WELCOME, {{INFO.driverInfo.first_name}} {{INFO.driverInfo.last_name}}</div>
     <ion-card style="margin: 10px;">
       <ion-card-header color="primary">
         <ion-card-title class="cardTitle">Driver Information</ion-card-title>
@@ -29,7 +29,7 @@
       <ion-card-content class="cardContent">
         <ion-row>
           <ion-col size="6" class="col1">Driver License Number:</ion-col>
-          <ion-col size="6" class="col2">#{{INFO.licenseInfo.lic_number != " " && INFO.licenseInfo.lic_number ? INFO.licenseInfo.lic_number : "N/A"}}</ion-col>
+          <ion-col size="6" class="col2">{{INFO.licenseInfo.lic_number != " " && INFO.licenseInfo.lic_number ? INFO.licenseInfo.lic_number : "N/A"}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Real ID:</ion-col>
@@ -45,12 +45,11 @@
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Blood Type:</ion-col>
-          <ion-col size="6" class="col2">N/A</ion-col>
+          <ion-col size="6" class="col2">{{INFO.driverInfo.blood_type != " " && INFO.driverInfo.blood_type ? INFO.driverInfo.blood_type : "N/A"}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="col1">Donor:</ion-col>
-          <ion-col size="6" class="col2">
-            <ion-icon name="heart" class="heartIcon"></ion-icon>
+          <ion-col size="6" class="col2"><ion-icon name="heart" class="heartIcon" *ngIf="INFO.driverInfo.donor =='Y'"></ion-icon>
           </ion-col>
         </ion-row>
         
@@ -147,11 +146,11 @@
               </ion-row>
               <ion-row>
                 <ion-col size="6" class="col1">Disposition Date:</ion-col>
-                <ion-col size="6" class="col2">{{item['rsp_mvr_susp_dtField'] != " " && item['rsp_mvr_susp_dtField'] ? item['rsp_mvr_susp_dtField'] : 'N/A'}}</ion-col>
+                <ion-col size="6" class="col2">{{item['rsp_mvr_cita_disp_dtField'] != " " && item['rsp_mvr_cita_disp_dtField'] ? item['rsp_mvr_cita_disp_dtField'] : 'N/A'}}</ion-col>
               </ion-row>
               <ion-row>
                 <ion-col size="6" class="col1">Disposition:</ion-col>
-                <ion-col size="6" class="col2">{{item['rsp_mvr_cita_disp_dtField'] != " " && item['rsp_mvr_cita_disp_dtField'] ? item['rsp_mvr_cita_disp_dtField'] : 'N/A'}}</ion-col>
+                <ion-col size="6" class="col2">{{item['rsp_mvr_cita_disp_descField'] != " " && item['rsp_mvr_cita_disp_descField'] ? item['rsp_mvr_cita_disp_descField'] : 'N/A'}}</ion-col>
               </ion-row>
               <ion-row>
                 <ion-col size="6" class="col1">Points:</ion-col>

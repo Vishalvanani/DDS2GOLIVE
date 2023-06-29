@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, NgZone } from '@angular/core';
 import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { Geolocation, Position } from '@capacitor/geolocation';
-import { environment } from '../../environments/environment';
+import { environment } from 'src/environments/environment';
 import cscfile from '../../assets/csclist.json';
 import locationfile from '../../assets/locationlist.json';
 import { ApiService } from '../services/api.service';
@@ -49,9 +49,9 @@ ionViewWillEnter(){
 }
 ionViewDidEnter(){
   setTimeout(() => {
-    this.address='';
-    this.markers=[];
-    this.createMap();
+  this.address='';
+  this.markers=[];
+  this.createMap();
   }, 1000);
   }
   /*Check which segment is selected*/
@@ -62,7 +62,9 @@ ionViewDidEnter(){
         this.address='';
         //clear markers
         this.markers=[];
-        this.createMap();
+        setTimeout(() => {
+          this.createMap();
+        }, 1000);
         break;
       case 'ListView':
         this.createMapList();

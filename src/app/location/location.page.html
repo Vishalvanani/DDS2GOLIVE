@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header >
   <ion-toolbar style="padding: 0px !important;">
     <ion-buttons slot="start">
       <ion-back-button color="light"></ion-back-button>
@@ -9,8 +9,8 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-segment [(ngModel)]="MapSegment" (ionChange)="mapViewChangeAction($event)" value="MapView" mode="md" style="--background: #fff !important;">
-    <ion-segment-button value="MapView"><ion-label>MapView</ion-label></ion-segment-button>
-    <ion-segment-button value="ListView"><ion-label>ListView</ion-label></ion-segment-button>
+    <ion-segment-button value="MapView"><ion-label>Map View</ion-label></ion-segment-button>
+    <ion-segment-button value="ListView"><ion-label>List View</ion-label></ion-segment-button>
   </ion-segment>
 </ion-header>
 <ion-view class="viewcontainer" cache-view="false">
@@ -39,7 +39,7 @@
       </div>
 
       <div class="container" *ngSwitchCase="'ListView'">
-        <ion-list lines="full">
+        <ion-list lines="full" style="height: 100%;">
           <ion-list-header color="light" lines="full">
             <ion-label style="text-align: left;">Address</ion-label>
             <ion-label style="text-align: center;">Distance</ion-label>
